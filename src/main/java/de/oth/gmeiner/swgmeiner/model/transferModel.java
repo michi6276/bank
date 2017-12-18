@@ -86,6 +86,7 @@ public  class transferModel implements Serializable {
        
        this.transmitter_c = customerModel.getCustomer();
      this.transmitter = customerModel.getCurrent_account();
+     
      return "transfer.xhtml";
     }
     public String createTransfer(){
@@ -101,7 +102,6 @@ public  class transferModel implements Serializable {
         }
     }
     
-
     public Account getReceiver() {
         return receiver;
     }
