@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"/>
+        <!-- load fontawesome -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+            <ui:include src="resources/menu.xhtml" />
+    </h:head>
+    <h:body>
+        <nav class='navbar navbar-default'>
+		<div class='container'>
+			<div class="navbar-collapse collapse">
+				<ul class='nav navbar-nav navbar-left'>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+        <div class="container">
+            <h:form>
+                <h1>Create Transfer:</h1>
+                                              
+             <table class="table table-striped table-bordered">
+   
+    <tbody>
+        <tr>
+        <td>Transmitter:</td>
+        <td>#{customerModel.current_account.iban}</td>
+        <td>#{customerModel.customer.prename}</td>
+        <td>#{customerModel.customer.surname}</td>
+        </tr>
+        <tr>
+        <td>Receiver:</td>
+        <td><h:inputText value="#{transferModel.iban}"/></td>
+        <td>#{transferModel.receiver_c.prename}</td>
+        <td>#{transferModel.receiver_c.surname}</td>
+        <td> <h:commandButton class="btn btn-primary btn-md" action="#{transferModel.checkIban()}" type="submit" value="Check IBAN"/></td>
+        </tr>
+      
+      
+    </tbody>
+    
+  </table>
+                <br></br> <label>Amount:</label>
+                          <br></br><h:inputText value="#{transferModel.amount}"/><br></br><br></br>
+                          <h:commandButton class="btn btn-primary btn-md" action="#{transferModel.createTransfer()}" type="submit" value="Create Transfer"/>
+                
+            </h:form>
+        </div>
+    </h:body>
+</html>
