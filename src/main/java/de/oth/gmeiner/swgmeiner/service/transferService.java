@@ -39,12 +39,12 @@ public class transferService {
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
-        if(account_id.isEmpty()) {
+        if (account_id.isEmpty()) {
             return null;
-        } else{
-        c = entityManager.find(Customer.class, account_id.get(0));
+        } else {
+            c = entityManager.find(Customer.class, account_id.get(0));
 
-        return c;
+            return c;
         }
     }
     @PersistenceContext(unitName = "SWGmeiner_pu")
@@ -59,6 +59,7 @@ public class transferService {
         return false;
 
     }
+
     @Transactional
     public Account getAccountbyIban(String iban) {
         ArrayList<Account> array = new ArrayList();
@@ -66,10 +67,10 @@ public class transferService {
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
-        if(account_id.isEmpty()) {
+        if (account_id.isEmpty()) {
             return null;
-        }else {
-        return entityManager.find(Account.class, account_id.get(0));
+        } else {
+            return entityManager.find(Account.class, account_id.get(0));
         }
     }
 
@@ -105,7 +106,7 @@ public class transferService {
         return array;
 
     }
-    
+
     public boolean isTransmitter(Transfer t, Account a) {
         Query q = entityManager.createQuery("SELECT t.id FROM Transfer as t WHERE t.transmitter =:acc and t.id =:id");
         q.setParameter("acc", a);

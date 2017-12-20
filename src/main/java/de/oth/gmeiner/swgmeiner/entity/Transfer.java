@@ -22,15 +22,13 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Transfer implements Serializable {
 
-    
     double amount;
     Date date;
-    @ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Account transmitter;
-    @ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Account receiver;
-  
-   
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,8 +74,6 @@ public class Transfer implements Serializable {
         this.receiver = receiver;
     }
 
-
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -102,5 +98,5 @@ public class Transfer implements Serializable {
     public String toString() {
         return "de.oth.gmeiner.swgmeiner.entity.Transfer[ id=" + id + " ]";
     }
-    
+
 }

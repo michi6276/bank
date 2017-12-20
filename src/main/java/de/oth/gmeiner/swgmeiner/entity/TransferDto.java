@@ -20,10 +20,11 @@ public class TransferDto implements Serializable {
 
     String receiver;
     String transmitter;
-     double amount;
-    
-    public TransferDto() {  
+    double amount;
+
+    public TransferDto() {
     }
+
     public TransferDto(String rec, String trans, double amount) {
         this.receiver = rec;
         this.transmitter = trans;
@@ -57,7 +58,7 @@ public class TransferDto implements Serializable {
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
-   
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -95,5 +96,5 @@ public class TransferDto implements Serializable {
     public String toString() {
         return "de.oth.gmeiner.swgmeiner.entity.TransferDto[ id=" + id + " ]";
     }
-    
+
 }

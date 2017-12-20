@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
+
 /**
  *
  * @author Michael
@@ -23,12 +24,12 @@ import java.util.Date;
 public class Account implements Serializable {
 
     String iban;
-    @ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Customer customer;
     @GeneratedValue(strategy = GenerationType.AUTO)
     long AccountNr;
-   Date date;
-   
+    Date date;
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     long accountCode;
     double accountBalance;
@@ -40,7 +41,6 @@ public class Account implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-   
 
     public String getIban() {
         return iban;
@@ -78,9 +78,9 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    public Account(){
-       
+
+    public Account() {
+
     }
 
     public Account(String iban, long AccountNr, long accountCode) {
@@ -88,12 +88,13 @@ public class Account implements Serializable {
         this.AccountNr = AccountNr;
         this.accountBalance = 0;
         this.accountCode = accountCode;
-        
+
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
     public Long getId() {
         return id;
     }
@@ -126,5 +127,5 @@ public class Account implements Serializable {
     public String toString() {
         return "de.oth.gmeiner.swgmeiner.entity.Account[ id=" + id + " ]";
     }
-    
+
 }

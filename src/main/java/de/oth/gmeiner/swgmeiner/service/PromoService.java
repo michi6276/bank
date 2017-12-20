@@ -28,9 +28,9 @@ import javax.transaction.Transactional;
 @WebService(serviceName = "PromoService")
 public class PromoService {
 
-public String getPromoCode() {
-    
-    return "hallo";
-}
-    
+    public String getPromoCode() {
+
+        return "hallo";
+    }
+
 }

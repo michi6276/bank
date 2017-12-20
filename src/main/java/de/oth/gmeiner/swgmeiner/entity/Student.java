@@ -19,7 +19,8 @@ public class Student {
     }
     private String vorname;
     private String nachname;
-    @Id private long matrikelNr;
+    @Id
+    private long matrikelNr;
 
     public Student(String vorname, String nachname, long matrikelNr) {
         this.vorname = vorname;
@@ -50,6 +51,5 @@ public class Student {
     public void setMatrikelNr(long matrikelNr) {
         this.matrikelNr = matrikelNr;
     }
-    
-    
+
 }

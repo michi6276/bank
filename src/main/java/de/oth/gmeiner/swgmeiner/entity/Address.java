@@ -26,16 +26,15 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-   
-     public Address(String street, String postCode, String city, String country){
-         this.street = street;
-         this.postCode = postCode;
-         this.city = city;
-         this.country = country;
+
+    public Address(String street, String postCode, String city, String country) {
+        this.street = street;
+        this.postCode = postCode;
+        this.city = city;
+        this.country = country;
     }
 
-    
-    public Address(){
+    public Address() {
     }
 
     public Long getId() {
@@ -102,5 +101,5 @@ public class Address implements Serializable {
     public String toString() {
         return "de.oth.gmeiner.swgmeiner.entity.Address[ id=" + id + " ]";
     }
-    
+
 }

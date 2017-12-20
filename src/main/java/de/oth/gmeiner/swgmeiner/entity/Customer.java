@@ -22,6 +22,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Customer implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -80,26 +81,23 @@ public class Customer implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
+
     String prename;
     String surname;
-    @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Address address;
     String email;
 
-    
-    
-
-     public Customer() {
+    public Customer() {
     }
-    public Customer(String username,String password,String prename, String surname, Address address,String email) {
-       this.username = username;
-     this.password = password;
-     this.prename = prename;
-     this.surname = surname;
-     this.address = address;
-     this.email = email;
+
+    public Customer(String username, String password, String prename, String surname, Address address, String email) {
+        this.username = username;
+        this.password = password;
+        this.prename = prename;
+        this.surname = surname;
+        this.address = address;
+        this.email = email;
     }
 
     public Long getId() {
@@ -134,5 +132,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "de.oth.gmeiner.swgmeiner.entity.Customer[ id=" + id + " ]";
     }
-    
+
 }
