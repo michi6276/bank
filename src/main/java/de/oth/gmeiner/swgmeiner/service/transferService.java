@@ -50,23 +50,27 @@ public class transferService {
     @PersistenceContext(unitName = "SWGmeiner_pu")
     private EntityManager entityManager;
 
+    @Transactional
     public boolean deleteAccount(Account acc) {
         Account account = entityManager.find(Account.class, acc.getId());
+        entityManager.merge(account);
         entityManager.remove(account);
 
         return false;
 
     }
-
+    @Transactional
     public Account getAccountbyIban(String iban) {
         ArrayList<Account> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT a.id FROM Account as a WHERE a.iban =:iban");
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
-
+        if(account_id.isEmpty()) {
+            return null;
+        }else {
         return entityManager.find(Account.class, account_id.get(0));
-
+        }
     }
 
     @Transactional

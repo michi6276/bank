@@ -5,14 +5,16 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"/>
         <!-- load fontawesome -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
-            
+               <ui:include src="resources/menu.xhtml" />
     </h:head>
     <h:body>
         <nav class='navbar navbar-default'>
@@ -35,7 +37,7 @@ and open the template in the editor.
                             <h:inputSecret class="form-control" value="#{customerModel.password}"/>
                     </div>
                 <h:commandButton class="btn btn-success btn-lg btn-block" action="#{customerModel.loginCustomer()}" type="submit" value="Login"/>
-                <h:commandButton class="btn btn-success btn-lg btn-block" action="signup.xhtml" type="submit" value="Signup"/>
+               
             </h:form>
         </div>
     </h:body>

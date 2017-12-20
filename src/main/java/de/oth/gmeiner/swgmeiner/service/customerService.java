@@ -75,12 +75,7 @@ public class customerService {
     return a.getAccountBalance();
     }
     
-     @Transactional
-    public Transfer[] viewLastBookings(Account account) {
-     
-        
-    return null;
-    }
+  
     
      @Transactional
     public double depositMoney(Account account, double amount) {

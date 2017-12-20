@@ -20,6 +20,7 @@ public class TransferDto implements Serializable {
 
     String receiver;
     String transmitter;
+     double amount;
     
     public TransferDto() {  
     }
@@ -56,7 +57,7 @@ public class TransferDto implements Serializable {
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
-    double amount;
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

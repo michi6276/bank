@@ -4,6 +4,7 @@ import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Address;
 import de.oth.gmeiner.swgmeiner.entity.Util;
+import de.oth.gmeiner.swgmeiner.service.PromoService;
 import de.oth.gmeiner.swgmeiner.service.customerService;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -46,6 +47,10 @@ public class customerModel implements Serializable {
     private long accountCode = 0;
     private double accountBalance = 0.0;
 
+     @Inject
+    private PromoService promoService;
+    
+    
     public double getAmount() {
         return amount;
     }
@@ -61,7 +66,7 @@ public class customerModel implements Serializable {
 
     public String setCurrent_account(Account current_account) {
         this.current_account = current_account;
-        return "newAccount.xhtml";
+        return "Account.xhtml";
     }
 
     public ArrayList getAccount() {
@@ -192,6 +197,7 @@ public class customerModel implements Serializable {
     }
 
  
+    
 
     public customerService getCustomerService() {
         return customerService;
@@ -216,6 +222,16 @@ public class customerModel implements Serializable {
             
         }
     }
+       public String logout() {
+            HttpSession session = Util.getSession();
+           
+          session.setAttribute("user", null);
+          this.current_account = null;
+          this.customer = null;
+          this.account = null;
+          
+          return "login.xhtml";
+       }
        public ArrayList getAccountbyC(){
            this.account = customerService.getAccountbyCustomer(this.customer);
            return account;
@@ -307,9 +323,13 @@ public class customerModel implements Serializable {
           customerService.deleteAccount(this.current_account);
           return "home.xhtml";
       }
-    
       
-    
+
+      
+    public String  getPromoCode() {
+         return promoService.getPromoCode();
+         
+    }
 
    
 

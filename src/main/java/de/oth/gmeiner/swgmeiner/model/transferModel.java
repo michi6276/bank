@@ -91,7 +91,7 @@ public  class transferModel implements Serializable {
     }
     public String createTransfer(){
        this.transfer = transferService.CreateTransfer(transmitter, receiver, this.amount);
-      
+             
        return "transfer.xhtml";
     }
     public String isTransmitter(Transfer t, Account a){
