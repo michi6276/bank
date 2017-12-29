@@ -6,10 +6,14 @@
 package de.oth.gmeiner.swgmeiner.service;
 
 import de.oth.gmeiner.swgmeiner.entity.Account;
+import de.oth.gmeiner.swgmeiner.entity.AccountType;
+
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Student;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.enterprise.context.RequestScoped;
@@ -79,9 +83,17 @@ public class customerService {
 
     @Transactional
     public double depositMoney(Account account, double amount) {
+  
         entityManager.find(Account.class, account.getId());
         account.setAccountBalance(account.getAccountBalance() + amount);
         entityManager.merge(account);
+       
+        Transfer t = new Transfer();
+        t.setAmount(amount);
+        t.setDate(new Date());
+        t.setReceiver( entityManager.find(Account.class, account.getId()));
+        t.setTransmitter(null);
+        entityManager.persist(t);
         return account.getAccountBalance();
     }
 
@@ -90,6 +102,12 @@ public class customerService {
         entityManager.find(Account.class, account.getId());
         account.setAccountBalance(account.getAccountBalance() - amount);
         entityManager.merge(account);
+         Transfer t = new Transfer();
+        t.setAmount(amount);
+        t.setDate(new Date());
+        t.setTransmitter(entityManager.find(Account.class, account.getId()));
+        t.setReceiver(null);
+        entityManager.persist(t);
         return false;
     }
 
@@ -98,6 +116,7 @@ public class customerService {
 
         Customer c1 = entityManager.find(Customer.class, c.getId());
         account.setCustomer(c1);
+        //account.setAccountType(AccountType.BankBook);
         entityManager.persist(account);
         return account;
     }
@@ -124,5 +143,27 @@ public class customerService {
         return true;
 
     }
+
+    public AccountType getTypebyName(String value) {
+        
+        Query q = entityManager.createQuery("SELECT a.id FROM AccountType as a WHERE a.name =:name");
+        q.setParameter("name", value);
+        //List<Integer> result=q.getResultList();
+        List<Long> type_id = q.getResultList();
+       AccountType a = entityManager.find(AccountType.class,type_id.get(0));
+        return a;
+    }
+    public Collection<AccountType> allTypes(){
+         
+        Query q = entityManager.createQuery("SELECT a FROM AccountType a");
+        
+        //List<Integer> result=q.getResultList();
+        List<AccountType> type_id = q.getResultList();
+        
+        
+        return type_id;
+    }
+
+   
 
 }

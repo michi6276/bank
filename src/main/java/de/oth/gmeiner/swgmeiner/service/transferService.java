@@ -39,13 +39,11 @@ public class transferService {
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
-        if (account_id.isEmpty()) {
-            return null;
-        } else {
+ 
             c = entityManager.find(Customer.class, account_id.get(0));
-
+            
             return c;
-        }
+        
     }
     @PersistenceContext(unitName = "SWGmeiner_pu")
     private EntityManager entityManager;

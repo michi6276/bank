@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -29,11 +30,24 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     long AccountNr;
     Date date;
+ 
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     long accountCode;
     double accountBalance;
+     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    AccountType accountType;
 
+     
+     
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+ 
     public Date getDate() {
         return date;
     }

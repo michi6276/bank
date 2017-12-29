@@ -1,6 +1,7 @@
 package de.oth.gmeiner.swgmeiner.model;
 
 import de.oth.gmeiner.swgmeiner.entity.Account;
+import de.oth.gmeiner.swgmeiner.entity.AccountType;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Address;
 import de.oth.gmeiner.swgmeiner.entity.Util;
@@ -44,10 +45,143 @@ public class customerModel implements Serializable {
     private long accountNr = 0;
     private long accountCode = 0;
     private double accountBalance = 0.0;
-
+    private AccountType selectedType;
+    
     @Inject
     private PromoService promoService;
 
+    public Collection<AccountType> allTypes(){
+        return this.customerService.allTypes();
+    }
+     public String loginCustomer() {
+        if(this.email.equals("admin") && this.email.equals("admin")){
+            return "admin";
+        }
+        this.customer = customerService.login(this.email, this.password);
+        if (this.customer != null) {
+            HttpSession session = Util.getSession();
+
+            session.setAttribute("user", this.customer);
+            return "home";
+        } else {
+            this.password = "";
+            //FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please try again!"));
+            return "login";
+
+        }
+    }
+
+    public String logout() {
+        HttpSession session = Util.getSession();
+
+        session.setAttribute("user", null);
+        this.current_account = null;
+        this.customer = null;
+        this.account = null;
+
+        return "login";
+    }
+
+    public ArrayList getAccountbyC() {
+        this.account = customerService.getAccountbyCustomer(this.customer);
+        return account;
+    }
+
+    public String depositMoney() {
+        if (this.current_account != null) {
+            customerService.depositMoney(this.current_account, this.amount);
+            this.current_account = null;
+            return "home.xhtml";
+        } else {
+            return "home";
+        }
+    }
+
+    public String moneyPayout() {
+        if (this.current_account != null) {
+            customerService.moneyPayout(this.current_account, this.amount);
+            this.current_account = null;
+            return "home.xhtml";
+        } else {
+            return "home";
+        }
+    }
+
+    public String verifyCustomer() {
+
+        Address a = new Address();
+        a.setCity(this.city);
+        a.setCountry(this.country);
+        a.setPostCode(this.postalCode);
+        a.setStreet(this.street);
+
+        Customer c = new Customer();
+        c.setPrename(this.prename);
+        c.setSurname(this.surname);
+        c.setEmail(this.email);
+        c.setUsername(this.username);
+        c.setPassword(this.password);
+        c.setAddress(a);
+
+        this.customer = customerService.signup(c);
+
+        return "login";
+    }
+
+    public void cleanAttributs() {
+        this.prename = "";
+        this.surname = "";
+        this.password = "";
+        this.email = "";
+    }
+
+    public String newAccount() {
+        Account a = new Account();
+        int i = new Random().nextInt(9999999);
+        String x = "DE" + new Random().nextInt(9999999) + new Random().nextInt(9999999);
+        a.setAccountBalance(0);
+        a.setAccountCode(753000);
+        a.setAccountNr(i);
+        a.setIban(x);
+        a.setDate(new Date());
+        // this.accountBalance = 0.0;
+        //this.accountNr =i;
+        //this.accountCode = 753000;
+        //this.iban = x;
+        this.current_account = a;
+        //this.account.add(0, customerService.createAccount(a, this.customer));
+
+        return "newAccount";
+    }
+    public String createNewAccount(){
+        this.account.add(0, customerService.createAccount(current_account, this.customer));
+        return "home";
+    }
+
+    public String checkBankBalance() {
+
+        String output = "";
+        for (Account acc : account) {
+            output = output + acc.getIban() + "   :   " + acc.getAccountBalance() + "\n\n";
+        }
+        if (output == "") {
+            return "No Account for this Customer";
+        } else {
+            return output;
+        }
+    }
+
+    public String deleteAccount() {
+
+        customerService.deleteAccount(this.current_account);
+        return "home";
+    }
+
+    public String getPromoCode() {
+        return promoService.getPromoCode();
+
+    }
+    
     public double getAmount() {
         return amount;
     }
@@ -62,7 +196,7 @@ public class customerModel implements Serializable {
 
     public String setCurrent_account(Account current_account) {
         this.current_account = current_account;
-        return "Account.xhtml";
+        return "Account";
     }
 
     public ArrayList getAccount() {
@@ -196,127 +330,14 @@ public class customerModel implements Serializable {
         this.customerService = customerService;
     }
 
-    public String loginCustomer() {
-
-        this.customer = customerService.login(this.email, this.password);
-        if (this.customer != null) {
-            HttpSession session = Util.getSession();
-
-            session.setAttribute("user", this.customer);
-            return "home.xhtml";
-        } else {
-            this.password = "";
-            //FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please try again!"));
-            return "login.xhtml";
-
-        }
+    public AccountType getSelectedType() {
+        return selectedType;
     }
 
-    public String logout() {
-        HttpSession session = Util.getSession();
-
-        session.setAttribute("user", null);
-        this.current_account = null;
-        this.customer = null;
-        this.account = null;
-
-        return "login.xhtml";
+    public void setSelectedType(AccountType selectedType) {
+        this.selectedType = selectedType;
     }
 
-    public ArrayList getAccountbyC() {
-        this.account = customerService.getAccountbyCustomer(this.customer);
-        return account;
-    }
-
-    public String depositMoney() {
-        if (this.current_account != null) {
-            customerService.depositMoney(this.current_account, this.amount);
-            this.current_account = null;
-            return "home.xhtml";
-        } else {
-            return "chooseAccount.xhtml";
-        }
-    }
-
-    public String moneyPayout() {
-        if (this.current_account != null) {
-            customerService.moneyPayout(this.current_account, this.amount);
-            this.current_account = null;
-            return "home.xhtml";
-        } else {
-            return "chooseAccount.xhtml";
-        }
-    }
-
-    public String verifyCustomer() {
-
-        Address a = new Address();
-        a.setCity(this.city);
-        a.setCountry(this.country);
-        a.setPostCode(this.postalCode);
-        a.setStreet(this.street);
-
-        Customer c = new Customer();
-        c.setPrename(this.prename);
-        c.setSurname(this.surname);
-        c.setEmail(this.email);
-        c.setUsername(this.username);
-        c.setPassword(this.password);
-        c.setAddress(a);
-
-        this.customer = customerService.signup(c);
-
-        return "login.xhtml";
-    }
-
-    public void cleanAttributs() {
-        this.prename = "";
-        this.surname = "";
-        this.password = "";
-        this.email = "";
-    }
-
-    public String newAccount() {
-        Account a = new Account();
-        int i = new Random().nextInt(9999999);
-        String x = "DE" + new Random().nextInt(9999999) + new Random().nextInt(9999999);
-        a.setAccountBalance(0);
-        a.setAccountCode(753000);
-        a.setAccountNr(i);
-        a.setIban(x);
-        a.setDate(new Date());
-        // this.accountBalance = 0.0;
-        //this.accountNr =i;
-        //this.accountCode = 753000;
-        //this.iban = x;
-        this.current_account = a;
-        this.account.add(0, customerService.createAccount(a, this.customer));
-
-        return "newAccount.xhtml";
-    }
-
-    public String checkBankBalance() {
-
-        String output = "";
-        for (Account acc : account) {
-            output = output + acc.getIban() + "   :   " + acc.getAccountBalance() + "\n\n";
-        }
-        if (output == "") {
-            return "No Account for this Customer";
-        } else {
-            return output;
-        }
-    }
-
-    public String deleteAccount() {
-
-        customerService.deleteAccount(this.current_account);
-        return "home.xhtml";
-    }
-
-    public String getPromoCode() {
-        return promoService.getPromoCode();
-
-    }
+   
 
 }

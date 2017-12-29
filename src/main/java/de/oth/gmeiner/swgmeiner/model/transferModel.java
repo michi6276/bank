@@ -52,12 +52,12 @@ public class transferModel implements Serializable {
         this.transmitter_c = customerModel.getCustomer();
         this.transmitter = customerModel.getCurrent_account();
 
-        return "transfer.xhtml";
+        return "transfer";
     }
 
     public String createTransfer() {
         this.transfer = transferService.CreateTransfer(transmitter, receiver, this.amount);
-        return "transfer.xhtml";
+        return "home";
     }
 
     public String isTransmitter(Transfer t, Account a) {
