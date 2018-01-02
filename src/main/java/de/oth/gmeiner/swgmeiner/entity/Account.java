@@ -6,6 +6,7 @@
 package de.oth.gmeiner.swgmeiner.entity;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Account implements Serializable {
 
+    
     String iban;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Customer customer;
@@ -35,7 +37,7 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     long accountCode;
     double accountBalance;
-     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     AccountType accountType;
 
      

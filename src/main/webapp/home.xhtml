@@ -41,9 +41,13 @@ and open the template in the editor.
                          <f:facet name="header">IBAN</f:facet> 
                         <h:outputText value="#{bank.iban}"/>
                     </h:column>
+                      <h:column>
+                         <f:facet name="header">Account Type</f:facet> 
+                        <h:outputText value="#{bank.accountType.getName()}"/>
+                    </h:column>
                     <h:column>
                          <f:facet name="header">Account Balance</f:facet> 
-                        <h:outputText value="#{bank.accountBalance} €"/>
+                        <h:outputText value="#{bank.getAccountBalance()} €"/>
                     </h:column>
                         <h:column>
                              <f:facet name="header">Date</f:facet> 

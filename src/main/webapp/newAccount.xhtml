@@ -60,11 +60,11 @@ and open the template in the editor.
       </tr><tr>
         <td>Account Type</td>
         <td><h:selectOneMenu value="#{customerModel.selectedType}">
-<f:converter binding="#{AccountTypeConverter}"/>
-<f:selectItems value="#{customerModel.allTypes()}"/>
+                <f:converter binding="#{customerModel.accountTypeConverter}"/>
+<f:selectItems value="#{customerModel.allTypes()}" var="AccountType" itemLabel="#{AccountType.name}"/>
 </h:selectOneMenu></td>
       </tr>
-      
+    
       
     </tbody>
     

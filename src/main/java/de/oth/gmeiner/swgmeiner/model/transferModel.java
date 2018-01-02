@@ -56,7 +56,7 @@ public class transferModel implements Serializable {
     }
 
     public String createTransfer() {
-        this.transfer = transferService.CreateTransfer(transmitter, receiver, this.amount);
+        this.transfer = transferService.CreateTransfer(transmitter.getIban(), receiver.getIban(), this.amount);
         return "home";
     }
 

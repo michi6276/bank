@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import javax.ejb.Schedule;
 import javax.enterprise.context.RequestScoped;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
@@ -102,6 +103,7 @@ public class customerService {
         entityManager.find(Account.class, account.getId());
         account.setAccountBalance(account.getAccountBalance() - amount);
         entityManager.merge(account);
+        
          Transfer t = new Transfer();
         t.setAmount(amount);
         t.setDate(new Date());
@@ -115,7 +117,9 @@ public class customerService {
     public Account createAccount(Account account, Customer c) {
 
         Customer c1 = entityManager.find(Customer.class, c.getId());
+       // AccountType a = entityManager.find(AccountType.class, accType);
         account.setCustomer(c1);
+       // account.setAccountType(a);
         //account.setAccountType(AccountType.BankBook);
         entityManager.persist(account);
         return account;
@@ -123,6 +127,7 @@ public class customerService {
 
     @Transactional
     public ArrayList getAccountbyCustomer(Customer c) {
+             
         ArrayList<Account> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT a.id FROM Account as a WHERE a.customer =:id order by date desc");
         q.setParameter("id", c);
@@ -144,13 +149,14 @@ public class customerService {
 
     }
 
-    public AccountType getTypebyName(String value) {
+    public AccountType getTypebyId(long value) {
         
-        Query q = entityManager.createQuery("SELECT a.id FROM AccountType as a WHERE a.name =:name");
+     /*   Query q = entityManager.createQuery("SELECT a.id FROM AccountType as a WHERE a.name =:name");
         q.setParameter("name", value);
         //List<Integer> result=q.getResultList();
         List<Long> type_id = q.getResultList();
-       AccountType a = entityManager.find(AccountType.class,type_id.get(0));
+       AccountType a = entityManager.find(AccountType.class,type_id.get(0)); */
+     AccountType a = entityManager.find(AccountType.class, value);
         return a;
     }
     public Collection<AccountType> allTypes(){
@@ -163,6 +169,24 @@ public class customerService {
         
         return type_id;
     }
+    
+        public List<Account> allAccounts(){
+         
+        Query q = entityManager.createQuery("SELECT a FROM Account a");
+        
+        //List<Integer> result=q.getResultList();
+        List<Account> accounts = q.getResultList();
+        
+        
+        return accounts;
+    }
+          @Transactional
+        public void updateAccount(Account a){
+            entityManager.merge(a);
+        }
+        
+        
+        
 
    
 

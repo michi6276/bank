@@ -39,7 +39,9 @@ public class transferService {
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
- 
+         if(account_id.isEmpty()) {
+               return null;
+        }
             c = entityManager.find(Customer.class, account_id.get(0));
             
             return c;
@@ -73,22 +75,31 @@ public class transferService {
     }
 
     @Transactional
-    public Transfer CreateTransfer(Account transmitter, Account receiver, double amount) {
+    public Transfer CreateTransfer(String t, String r, double amount) {
+        Account transmitter = this.getAccountbyIban(t);
+        Account receiver = this.getAccountbyIban(r);
+        if(r != null && t != null) {
         receiver.setAccountBalance(receiver.getAccountBalance() + amount);
         transmitter.setAccountBalance(transmitter.getAccountBalance() - amount);
         entityManager.merge(receiver);
         entityManager.merge(transmitter);
 
-        Transfer t = new Transfer();
-        t.setAmount(amount);
-        t.setDate(new Date());
-        t.setReceiver(entityManager.find(Account.class, receiver.getId()));
+        Transfer tr = new Transfer();
+        tr.setAmount(amount);
+        tr.setDate(new Date());
+        tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
 
-        t.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
+        tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
 
-        entityManager.persist(t);
+        entityManager.persist(tr);
 
-        return t;
+        return tr;
+        }
+        else {
+            System.out.println("hallo");
+            return null;
+        }
+        
     }
 
     @Transactional

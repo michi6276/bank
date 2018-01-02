@@ -1,5 +1,6 @@
 package de.oth.gmeiner.swgmeiner.model;
 
+import Converter.AccountTypeConverter;
 import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.AccountType;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import javax.enterprise.context.RequestScoped;
@@ -46,10 +48,23 @@ public class customerModel implements Serializable {
     private long accountCode = 0;
     private double accountBalance = 0.0;
     private AccountType selectedType;
-    
+    @Inject
+    AccountTypeConverter accountTypeConverter;
     @Inject
     private PromoService promoService;
 
+        public void updateBalance() {
+        
+        List<Account> acc = customerService.allAccounts();
+        
+        for(Account a : acc){
+            a.setAccountBalance(a.getAccountBalance() + 2* a.getAccountBalance());
+            customerService.updateAccount(a);
+        }
+        
+    }
+    
+    
     public Collection<AccountType> allTypes(){
         return this.customerService.allTypes();
     }
@@ -144,6 +159,9 @@ public class customerModel implements Serializable {
         a.setAccountNr(i);
         a.setIban(x);
         a.setDate(new Date());
+        
+        System.out.println("Seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeelected Tyyyyyyyyyyyyyyyyyyyyyyyyype" +this.getSelectedType());
+       
         // this.accountBalance = 0.0;
         //this.accountNr =i;
         //this.accountCode = 753000;
@@ -338,6 +356,15 @@ public class customerModel implements Serializable {
         this.selectedType = selectedType;
     }
 
-   
+    public AccountTypeConverter getAccountTypeConverter() {
+        return accountTypeConverter;
+    }
+
+    public void setAccountTypeConverter(AccountTypeConverter AccountTypeConverter) {
+        this.accountTypeConverter = AccountTypeConverter;
+    }
+    
+    
+ 
 
 }
