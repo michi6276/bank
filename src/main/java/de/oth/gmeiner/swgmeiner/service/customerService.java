@@ -114,7 +114,7 @@ public class customerService {
     }
 
     @Transactional
-    public Account createAccount(Account account, Customer c) {
+    public Account createAccount(Account account, Customer c, AccountType accType) {
 
         Customer c1 = entityManager.find(Customer.class, c.getId());
        // AccountType a = entityManager.find(AccountType.class, accType);

@@ -159,7 +159,7 @@ public class customerModel implements Serializable {
         a.setAccountNr(i);
         a.setIban(x);
         a.setDate(new Date());
-        
+        a.setAccountType(this.selectedType);
         System.out.println("Seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeelected Tyyyyyyyyyyyyyyyyyyyyyyyyype" +this.getSelectedType());
        
         // this.accountBalance = 0.0;
@@ -172,7 +172,8 @@ public class customerModel implements Serializable {
         return "newAccount";
     }
     public String createNewAccount(){
-        this.account.add(0, customerService.createAccount(current_account, this.customer));
+      
+        this.account.add(0, customerService.createAccount(current_account, this.customer,this.getSelectedType()));
         return "home";
     }
 

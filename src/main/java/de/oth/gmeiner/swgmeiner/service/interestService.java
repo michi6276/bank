@@ -27,7 +27,7 @@ public class interestService {
 @Inject
 customerService custService;
       
-    @Schedule(second="*", minute="*/10", hour="*", persistent=false)
+    @Schedule(second="*", minute="*", hour="*/24", persistent=false)
     public void interest() {
         System.out.println("hallo");
         List<Account> acc = custService.allAccounts();
