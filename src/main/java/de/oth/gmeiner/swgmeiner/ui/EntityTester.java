@@ -19,17 +19,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * @author Jon
  */
 @WebServlet(name = "EntityTester", urlPatterns = {"/EntityTester"})
 public class EntityTester extends HttpServlet {
-    
+
     @Inject
     customerService service;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,16 +46,15 @@ public class EntityTester extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EntityTester</title>");            
+            out.println("<title>Servlet EntityTester</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EntityTester at " + request.getContextPath() + "</h1>");
-            
-            
-         //Customer c =   service.signup(new Customer("Frank1234455","password","Christoph","Weidner",new Address("Klenzestraße","93051","Regensburg","Deutschland"),"weidner.christoph@web.de"));
-        // Account a = service.createAccount(new Account("IBAN", 1389492,2389298),c);
-       //  service.depositMoney(a, 200);
-        //    out.println("Kunde und Account erstellt. Kontostand:" + service.getBankBalance(a));
+
+            //Customer c =   service.signup(new Customer("Frank1234455","password","Christoph","Weidner",new Address("Klenzestraße","93051","Regensburg","Deutschland"),"weidner.christoph@web.de"));
+            // Account a = service.createAccount(new Account("IBAN", 1389492,2389298),c);
+            //  service.depositMoney(a, 200);
+            //    out.println("Kunde und Account erstellt. Kontostand:" + service.getBankBalance(a));
             out.println("</body>");
             out.println("</html>");
         }

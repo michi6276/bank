@@ -47,29 +47,19 @@ public class customerModel implements Serializable {
     private long accountNr = 0;
     private long accountCode = 0;
     private double accountBalance = 0.0;
+
     private AccountType selectedType;
     @Inject
-    AccountTypeConverter accountTypeConverter;
+    private AccountTypeConverter accountTypeConverter;
     @Inject
     private PromoService promoService;
 
-        public void updateBalance() {
-        
-        List<Account> acc = customerService.allAccounts();
-        
-        for(Account a : acc){
-            a.setAccountBalance(a.getAccountBalance() + 2* a.getAccountBalance());
-            customerService.updateAccount(a);
-        }
-        
-    }
-    
-    
-    public Collection<AccountType> allTypes(){
+    public Collection<AccountType> allTypes() {
         return this.customerService.allTypes();
     }
-     public String loginCustomer() {
-        if(this.email.equals("admin") && this.email.equals("admin")){
+
+    public String loginCustomer() {
+        if (this.email.equals("admin") && this.email.equals("admin")) {
             return "admin";
         }
         this.customer = customerService.login(this.email, this.password);
@@ -160,20 +150,14 @@ public class customerModel implements Serializable {
         a.setIban(x);
         a.setDate(new Date());
         a.setAccountType(this.selectedType);
-        System.out.println("Seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeelected Tyyyyyyyyyyyyyyyyyyyyyyyyype" +this.getSelectedType());
-       
-        // this.accountBalance = 0.0;
-        //this.accountNr =i;
-        //this.accountCode = 753000;
-        //this.iban = x;
-        this.current_account = a;
-        //this.account.add(0, customerService.createAccount(a, this.customer));
 
+        this.current_account = a;
         return "newAccount";
     }
-    public String createNewAccount(){
-      
-        this.account.add(0, customerService.createAccount(current_account, this.customer,this.getSelectedType()));
+
+    public String createNewAccount() {
+
+        this.account.add(0, customerService.createAccount(current_account, this.customer, this.getSelectedType()));
         return "home";
     }
 
@@ -200,7 +184,7 @@ public class customerModel implements Serializable {
         return promoService.getPromoCode();
 
     }
-    
+
     public double getAmount() {
         return amount;
     }
@@ -364,8 +348,5 @@ public class customerModel implements Serializable {
     public void setAccountTypeConverter(AccountTypeConverter AccountTypeConverter) {
         this.accountTypeConverter = AccountTypeConverter;
     }
-    
-    
- 
 
 }

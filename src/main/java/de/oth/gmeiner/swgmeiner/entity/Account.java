@@ -25,14 +25,12 @@ import javax.persistence.OneToOne;
 @Entity
 public class Account implements Serializable {
 
-    
     String iban;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Customer customer;
     @GeneratedValue(strategy = GenerationType.AUTO)
     long AccountNr;
     Date date;
- 
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     long accountCode;
@@ -40,8 +38,6 @@ public class Account implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     AccountType accountType;
 
-     
-     
     public AccountType getAccountType() {
         return accountType;
     }
@@ -49,7 +45,7 @@ public class Account implements Serializable {
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
- 
+
     public Date getDate() {
         return date;
     }

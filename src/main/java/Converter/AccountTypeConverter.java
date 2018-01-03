@@ -17,7 +17,6 @@ import javax.faces.convert.Converter;
 
 import javax.inject.Named;
 
-
 /**
  *
  * @author Michael
@@ -25,29 +24,31 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class AccountTypeConverter implements Converter {
-@Inject
-private customerService customerService;
 
-@Override
-public Object getAsObject(FacesContext context, UIComponent component, String value) {
-if (value==null)
-return "";
-AccountType type = customerService.getTypebyId(Long.parseLong(value));
-if(type==null)
-return "";
-return type;
-}
-@Override
-public String getAsString(FacesContext context, UIComponent component, Object value) {
-if(value==null)
-return null;
-if(!value.getClass().equals(AccountType.class))
-return null;
-return String.valueOf(((AccountType)value).getId());
-}
+    @Inject
+    private customerService customerService;
 
+    @Override
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        if (value == null) {
+            return "";
+        }
+        AccountType type = customerService.getTypebyId(Long.parseLong(value));
+        if (type == null) {
+            return "";
+        }
+        return type;
+    }
 
-
-
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (!value.getClass().equals(AccountType.class)) {
+            return null;
+        }
+        return String.valueOf(((AccountType) value).getId());
+    }
 
 }

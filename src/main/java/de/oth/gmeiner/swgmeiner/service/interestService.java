@@ -5,7 +5,6 @@
  */
 package de.oth.gmeiner.swgmeiner.service;
 
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,25 +22,25 @@ import de.oth.gmeiner.swgmeiner.entity.Account;
  */
 @Singleton
 public class interestService {
-    
-@Inject
-customerService custService;
-      
-    @Schedule(second="*", minute="*", hour="*/24", persistent=false)
+
+    @Inject
+    customerService custService;
+
+    @Schedule(second = "*", minute = "*", hour = "*/5", persistent = false)
     public void interest() {
-        System.out.println("hallo");
+
         List<Account> acc = custService.allAccounts();
-        
-        for(Account a : acc){
-            if(a.getAccountBalance() < 0){
-               
-            } 
-            else{
-            a.setAccountBalance(a.getAccountBalance() + 0.002* a.getAccountBalance());
-            custService.updateAccount(a);
+
+        for (Account a : acc) {
+            if (a.getAccountBalance() > 0) {
+
+                if (a.getAccountType() != null) {
+                    a.setAccountBalance(a.getAccountBalance() + (a.getAccountType().getInterest() / 100) * a.getAccountBalance());
+                    custService.updateAccount(a);
+                }
             }
         }
-        
+
     }
-    
+
 }
