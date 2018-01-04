@@ -9,7 +9,7 @@ import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.AccountType;
 
 import de.oth.gmeiner.swgmeiner.entity.Customer;
-import de.oth.gmeiner.swgmeiner.entity.Student;
+
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import helper.BCrypt;
 import helper.qualifier.OptionAccount;
@@ -167,16 +167,17 @@ public class customerService {
 
     @Transactional
     public boolean deleteAccount(Account acc,ArrayList<Transfer> list) {
-       
-     
-        for(Transfer t : list){
             
+        for(Transfer t : list){
+            entityManager.merge(t);
             entityManager.remove(entityManager.find(Transfer.class, t.getId()));
         }
          Account account = entityManager.find(Account.class, acc.getId());
-         if(account != null) 
-        entityManager.remove(account);
-
+         if(account != null) {
+             entityManager.merge(account);
+             entityManager.remove(account);
+         
+         }
         return true;
 
     }

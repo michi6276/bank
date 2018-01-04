@@ -7,7 +7,6 @@ package de.oth.gmeiner.swgmeiner.service;
 
 import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
-import de.oth.gmeiner.swgmeiner.entity.Student;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import helper.qualifier.OptionTransfer;
 import java.util.ArrayList;
