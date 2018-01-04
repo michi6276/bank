@@ -8,6 +8,7 @@ import de.oth.gmeiner.swgmeiner.entity.Address;
 import de.oth.gmeiner.swgmeiner.entity.Util;
 import de.oth.gmeiner.swgmeiner.service.PromoService;
 import de.oth.gmeiner.swgmeiner.service.customerService;
+import de.oth.gmeiner.swgmeiner.service.transferService;
 import helper.BCrypt;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -179,7 +180,7 @@ public class customerModel implements Serializable {
 
     public String deleteAccount() {
 
-        customerService.deleteAccount(this.current_account);
+        customerService.deleteAccount(this.current_account,transferService.getTransferbyAccount(current_account));
         return "home";
     }
 
@@ -247,7 +248,9 @@ public class customerModel implements Serializable {
 
     @Inject
     private customerService customerService;
-
+ @Inject
+    private transferService transferService;
+    
     public Customer getCustomer() {
         return customer;
     }

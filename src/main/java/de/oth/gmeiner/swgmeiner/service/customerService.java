@@ -12,6 +12,9 @@ import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Student;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import helper.BCrypt;
+import helper.qualifier.OptionAccount;
+import helper.qualifier.OptionCustomer;
+import helper.qualifier.OptionTransfer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -19,11 +22,13 @@ import java.util.List;
 import java.util.Random;
 import javax.ejb.Schedule;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -33,6 +38,18 @@ import javax.transaction.Transactional;
 @WebService(serviceName = "customerService")
 public class customerService {
 
+    @Inject
+    @OptionCustomer
+    private Logger loggerCustomer;
+    
+    @Inject
+    @OptionAccount
+    private Logger loggerAccount;
+    
+    @Inject
+    @OptionTransfer
+    private Logger loggerTransfer;
+    
     public static void newAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -70,6 +87,7 @@ public class customerService {
         List<Long> c = q.getResultList();
         if (c.isEmpty()) {
             entityManager.persist(customer);
+            loggerCustomer.info("new Customer created: " + customer.getId());
             return customer;
         } else {
             return null;
@@ -98,6 +116,7 @@ public class customerService {
         t.setReceiver(entityManager.find(Account.class, account.getId()));
         t.setTransmitter(null);
         entityManager.persist(t);
+        loggerTransfer.info("new Transfer created: "+t.getId());
         return account.getAccountBalance();
     }
 
@@ -114,6 +133,7 @@ public class customerService {
         t.setTransmitter(entityManager.find(Account.class, account.getId()));
         t.setReceiver(null);
         entityManager.persist(t);
+        loggerTransfer.info("new Transfer created: "+t.getId());
         return false;
     }
 
@@ -126,6 +146,7 @@ public class customerService {
         account.setAccountType(a);
         // account.setAccountType(AccountType.BankBook);
         entityManager.persist(account);
+        loggerAccount.info("new Account created: "+account.getId());
         return account;
     }
 
@@ -145,8 +166,15 @@ public class customerService {
     }
 
     @Transactional
-    public boolean deleteAccount(Account acc) {
-        Account account = entityManager.find(Account.class, acc.getId());
+    public boolean deleteAccount(Account acc,ArrayList<Transfer> list) {
+       
+     
+        for(Transfer t : list){
+            
+            entityManager.remove(entityManager.find(Transfer.class, t.getId()));
+        }
+         Account account = entityManager.find(Account.class, acc.getId());
+         if(account != null) 
         entityManager.remove(account);
 
         return true;
@@ -161,7 +189,7 @@ public class customerService {
         List<Long> type_id = q.getResultList();
        AccountType a = entityManager.find(AccountType.class,type_id.get(0)); */
         AccountType a = entityManager.find(AccountType.class, value);
-        System.out.println("haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaallo " + a.getName());
+     
         return a;
     }
 

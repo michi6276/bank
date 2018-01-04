@@ -9,16 +9,19 @@ import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Student;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
+import helper.qualifier.OptionTransfer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -28,6 +31,10 @@ import javax.transaction.Transactional;
 @WebService(serviceName = "transferService")
 public class transferService {
 
+    @Inject
+    @OptionTransfer
+    private Logger logger;
+    
     public static void newAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -93,7 +100,7 @@ public class transferService {
         tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
 
         entityManager.persist(tr);
-
+        logger.info("new Transfer created : "+tr.getId());
         return tr;
         }
         else {
