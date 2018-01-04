@@ -46,6 +46,10 @@ and open the template in the editor.
                         <f:facet name="header">Receiver</f:facet> 
                         <h:outputText value="#{t.receiver.iban}"/>
                     </h:column>
+                     <h:column>
+                        <f:facet name="header">Purpose</f:facet> 
+                        <h:outputText value="#{t.purpose}"/>
+                    </h:column>
                     <h:column>
                         <f:facet name="header">Amount</f:facet> 
                         <h:outputText value="#{transferModel.isTransmitter(t,customerModel.current_account)}#{t.amount} €"/>

@@ -32,17 +32,18 @@ public class transferService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Transactional
     public Customer checkIban(String iban) {
-        Customer c = new Customer();
+        Customer c;
 
         Query q = entityManager.createQuery("SELECT c.id FROM Customer as c WHERE c.id=(Select a.customer FROM Account as a WHERE a.iban=:iban)");
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
-        List<Long> account_id = q.getResultList();
-         if(account_id.isEmpty()) {
+        List<Long> customer = q.getResultList();
+         if(customer.isEmpty()) {
                return null;
         }
-            c = entityManager.find(Customer.class, account_id.get(0));
+            c = entityManager.find(Customer.class, customer.get(0));
             
             return c;
         
@@ -75,7 +76,7 @@ public class transferService {
     }
 
     @Transactional
-    public Transfer CreateTransfer(String t, String r, double amount) {
+    public Transfer CreateTransfer(String t, String r, double amount,String purpose) {
         Account transmitter = this.getAccountbyIban(t);
         Account receiver = this.getAccountbyIban(r);
         if(r != null && t != null) {
@@ -87,8 +88,8 @@ public class transferService {
         Transfer tr = new Transfer();
         tr.setAmount(amount);
         tr.setDate(new Date());
+        tr.setPurpose(purpose);
         tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
-
         tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
 
         entityManager.persist(tr);

@@ -35,6 +35,7 @@ public class transferModel implements Serializable {
     Customer transmitter_c;
     double amount;
     String iban;
+    String purpose;
     Date date;
     ArrayList<Transfer> transfers;
 
@@ -56,7 +57,7 @@ public class transferModel implements Serializable {
     }
 
     public String createTransfer() {
-        this.transfer = transferService.CreateTransfer(transmitter.getIban(), receiver.getIban(), this.amount);
+        this.transfer = transferService.CreateTransfer(transmitter.getIban(), receiver.getIban(), this.amount,this.purpose);
         return "home";
     }
 
@@ -151,4 +152,14 @@ public class transferModel implements Serializable {
     public void setDto(TransferDto dto) {
         this.dto = dto;
     }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+    
+    
 }

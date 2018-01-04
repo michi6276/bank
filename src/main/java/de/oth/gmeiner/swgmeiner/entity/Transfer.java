@@ -20,10 +20,11 @@ import javax.persistence.ManyToOne;
  * @author Michael
  */
 @Entity
-public class Transfer implements Serializable {
+public class Transfer extends SuperEntity implements Serializable {
 
     double amount;
     Date date;
+    String purpose;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Account transmitter;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -74,29 +75,12 @@ public class Transfer implements Serializable {
         this.receiver = receiver;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public String getPurpose() {
+        return purpose;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Transfer)) {
-            return false;
-        }
-        Transfer other = (Transfer) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "de.oth.gmeiner.swgmeiner.entity.Transfer[ id=" + id + " ]";
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
 }

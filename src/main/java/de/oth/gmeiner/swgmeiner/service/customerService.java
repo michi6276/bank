@@ -11,6 +11,7 @@ import de.oth.gmeiner.swgmeiner.entity.AccountType;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Student;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
+import helper.BCrypt;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -50,7 +51,8 @@ public class customerService {
 
             Customer customer = entityManager.find(Customer.class, Id);
             // entityManager.find(Customer.class, Id);
-            if (customer.getPassword().equals(password)) {
+          //  if (customer.getPassword().equals(password)) {
+                if(checkPassword(password,customer.getPassword())) {
                 return customer;
             } else {
                 return null;
@@ -91,6 +93,7 @@ public class customerService {
 
         Transfer t = new Transfer();
         t.setAmount(amount);
+        t.setPurpose("Deposit Money");
         t.setDate(new Date());
         t.setReceiver(entityManager.find(Account.class, account.getId()));
         t.setTransmitter(null);
@@ -107,6 +110,7 @@ public class customerService {
         Transfer t = new Transfer();
         t.setAmount(amount);
         t.setDate(new Date());
+        t.setPurpose("Money payout");
         t.setTransmitter(entityManager.find(Account.class, account.getId()));
         t.setReceiver(null);
         entityManager.persist(t);
@@ -182,8 +186,30 @@ public class customerService {
     }
 
     @Transactional
-    public void updateAccount(Account a) {
+    public void updateAccount(Account a,Transfer t) {
+                
         entityManager.merge(a);
+        entityManager.merge(t);
     }
+  
+    
+    
+     public static String hashPassword(String password_plaintext) {
+		String salt = BCrypt.gensalt(12);
+		String hashed_password = BCrypt.hashpw(password_plaintext, salt);
+                System.out.println("PASSWORT: " + hashed_password);
+		return(hashed_password);
+	}
+      
+      public static boolean checkPassword(String password_plaintext, String stored_hash) {
+		boolean password_verified = false;
+
+		if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
+
+		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+
+		return(password_verified);
+	}
 
 }

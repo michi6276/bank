@@ -47,6 +47,10 @@
     </tbody>
     
   </table>
+                 <div class="form-group">
+                            <label>Purpose</label>
+                            <h:inputText class="form-control" value="#{transferModel.purpose}"/>
+                    </div>
                 <br></br> <label>Amount:</label>
                           <br></br><h:inputText value="#{transferModel.amount}"/><br></br><br></br>
                           <h:commandButton class="btn btn-primary btn-md" action="#{transferModel.createTransfer()}" type="submit" value="Create Transfer"/>

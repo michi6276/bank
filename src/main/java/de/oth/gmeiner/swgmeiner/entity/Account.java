@@ -23,7 +23,7 @@ import javax.persistence.OneToOne;
  * @author Michael
  */
 @Entity
-public class Account implements Serializable {
+public class Account extends SuperEntity implements Serializable {
 
     String iban;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -79,6 +79,10 @@ public class Account implements Serializable {
     }
 
     public double getAccountBalance() {
+        //DecimalFormat f = new DecimalFormat("#0.00"); 
+        accountBalance = accountBalance*100;
+        accountBalance = Math.round(accountBalance);
+        accountBalance = accountBalance/100;
         return accountBalance;
     }
 
@@ -115,29 +119,6 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Account)) {
-            return false;
-        }
-        Account other = (Account) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "de.oth.gmeiner.swgmeiner.entity.Account[ id=" + id + " ]";
-    }
 
 }

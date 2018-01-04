@@ -8,6 +8,7 @@ import de.oth.gmeiner.swgmeiner.entity.Address;
 import de.oth.gmeiner.swgmeiner.entity.Util;
 import de.oth.gmeiner.swgmeiner.service.PromoService;
 import de.oth.gmeiner.swgmeiner.service.customerService;
+import helper.BCrypt;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,9 +78,9 @@ public class customerModel implements Serializable {
     }
 
     public String logout() {
-        HttpSession session = Util.getSession();
+      
 
-        session.setAttribute("user", null);
+        
         this.current_account = null;
         this.customer = null;
         this.account = null;
@@ -125,12 +126,12 @@ public class customerModel implements Serializable {
         c.setSurname(this.surname);
         c.setEmail(this.email);
         c.setUsername(this.username);
-        c.setPassword(this.password);
+        c.setPassword(customerService.hashPassword(this.password));
         c.setAddress(a);
 
         this.customer = customerService.signup(c);
 
-        return "login";
+        return "home";
     }
 
     public void cleanAttributs() {
@@ -158,7 +159,7 @@ public class customerModel implements Serializable {
     public String createNewAccount() {
 
         this.account.add(0, customerService.createAccount(current_account, this.customer, this.getSelectedType()));
-        return "home";
+        return "promoCode";
     }
 
     public String checkBankBalance() {
@@ -173,6 +174,8 @@ public class customerModel implements Serializable {
             return output;
         }
     }
+    
+    
 
     public String deleteAccount() {
 
