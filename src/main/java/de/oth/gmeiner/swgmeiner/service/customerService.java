@@ -72,6 +72,7 @@ public class customerService {
                 if(checkPassword(password,customer.getPassword())) {
                 return customer;
             } else {
+                    
                 return null;
             }
         }
@@ -169,15 +170,19 @@ public class customerService {
     public boolean deleteAccount(Account acc,ArrayList<Transfer> list) {
             
         for(Transfer t : list){
-            entityManager.merge(t);
+       t.setReceiver(null);
+       t.setTransmitter(null);
+       entityManager.merge(t);
             entityManager.remove(entityManager.find(Transfer.class, t.getId()));
         }
-         Account account = entityManager.find(Account.class, acc.getId());
-         if(account != null) {
+        
+        Account account = entityManager.find(Account.class, acc.getId());
+            account.setAccountType(null);
+            account.setCustomer(null);
              entityManager.merge(account);
              entityManager.remove(account);
          
-         }
+         
         return true;
 
     }

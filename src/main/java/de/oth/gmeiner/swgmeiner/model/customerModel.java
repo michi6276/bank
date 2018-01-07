@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Random;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -61,6 +63,7 @@ public class customerModel implements Serializable {
     }
 
     public String loginCustomer() {
+         
         if (this.email.equals("admin") && this.email.equals("admin")) {
             return "admin";
         }
@@ -71,8 +74,9 @@ public class customerModel implements Serializable {
             session.setAttribute("user", this.customer);
             return "home";
         } else {
+             FacesContext.getCurrentInstance().addMessage("registerForm:loginVal",new FacesMessage("Password or E-mail are not correct")); 
             this.password = "";
-            //FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please try again!"));
+          
             return "login";
 
         }
@@ -115,7 +119,9 @@ public class customerModel implements Serializable {
     }
 
     public String verifyCustomer() {
-
+        if(this.city == "" || this.country == "" || this.postalCode == "" || this.street == "" || this.prename == "" || this.surname == "" || this.email == "" || this.password == "") {
+            FacesContext.getCurrentInstance().addMessage("registerForm:registerVal",new FacesMessage("Password or E-mail are not correct")); 
+        } else {
         Address a = new Address();
         a.setCity(this.city);
         a.setCountry(this.country);
@@ -133,6 +139,8 @@ public class customerModel implements Serializable {
         this.customer = customerService.signup(c);
 
         return "home";
+        }
+        return "signup";
     }
 
     public void cleanAttributs() {

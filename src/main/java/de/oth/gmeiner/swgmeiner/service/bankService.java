@@ -37,13 +37,13 @@ public class bankService {
             if (a.getAccountBalance() > 0) {
 
                 if (a.getAccountType() != null) {
-                    double newBalance = a.getAccountBalance() + (a.getAccountType().getInterest() / 100) * a.getAccountBalance();
-                    newBalance = newBalance*100;
-                    newBalance = Math.round(newBalance);
-                    newBalance = newBalance/100;
-                    a.setAccountBalance(newBalance);
+                    double interest = (a.getAccountType().getInterest() / 100) * a.getAccountBalance();
+                    interest = interest*100;
+                    interest = Math.round(interest);
+                    interest = interest/100;
+                    a.setAccountBalance(a.getAccountBalance() + interest);
                     Transfer t = new Transfer();
-                    t.setAmount((a.getAccountType().getInterest() / 100) * a.getAccountBalance());
+                    t.setAmount(interest);
                     t.setDate(new Date());
                     t.setPurpose("Interest");
                     t.setReceiver(a);
@@ -66,9 +66,13 @@ public class bankService {
             if (a.getAccountBalance() > 0) {
 
                 if (a.getAccountType() != null) {
-                    a.setAccountBalance(a.getAccountBalance() - a.getAccountType().getCharges());
+                   double charges =  a.getAccountType().getCharges();
+                   charges = charges*100;
+                   charges = Math.round(charges);
+                   charges = charges/100;
+                    a.setAccountBalance(a.getAccountBalance() - charges);
                      Transfer t = new Transfer();
-                    t.setAmount(a.getAccountType().getCharges());
+                    t.setAmount(charges);
                     t.setDate(new Date());
                     t.setPurpose("Charges");
                     t.setTransmitter(a);

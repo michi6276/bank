@@ -8,7 +8,6 @@ package de.oth.gmeiner.swgmeiner.ui;
 import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.Address;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
-
 import de.oth.gmeiner.swgmeiner.service.customerService;
 import java.io.IOException;
 import java.io.PrintWriter;
