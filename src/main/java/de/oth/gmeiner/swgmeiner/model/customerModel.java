@@ -84,8 +84,9 @@ public class customerModel implements Serializable {
 
     public String logout() {
       
-
-        
+        HttpSession session = Util.getSession();
+        session.invalidate();
+        this.customer = null;
         this.current_account = null;
         this.customer = null;
         this.account = null;
@@ -119,8 +120,8 @@ public class customerModel implements Serializable {
     }
 
     public String verifyCustomer() {
-        if(this.city == "" || this.country == "" || this.postalCode == "" || this.street == "" || this.prename == "" || this.surname == "" || this.email == "" || this.password == "") {
-            FacesContext.getCurrentInstance().addMessage("registerForm:registerVal",new FacesMessage("Password or E-mail are not correct")); 
+        if(this.city.equals("") || this.country.equals("") || this.postalCode.equals("") || this.street.equals("") || this.prename.equals("") || this.surname.equals("") || this.email.equals("") || this.password.equals("")) {
+            FacesContext.getCurrentInstance().addMessage("registerForm:registerVal",new FacesMessage("Please fill all fields")); 
         } else {
         Address a = new Address();
         a.setCity(this.city);
@@ -137,8 +138,13 @@ public class customerModel implements Serializable {
         c.setAddress(a);
 
         this.customer = customerService.signup(c);
-
+        if(this.customer != null) {
         return "home";
+                } else {
+                FacesContext.getCurrentInstance().addMessage("registerForm:EmailVal",new FacesMessage("E-mail already in use")); 
+                return "signup";
+                }
+               
         }
         return "signup";
     }

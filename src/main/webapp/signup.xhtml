@@ -62,7 +62,8 @@
                     </div>
                 
                
-                <h:commandButton class="btn btn-success btn-lg btn-block" action="#{customerModel.verifyCustomer()}" type="submit" value="Signup"/>
+                <h:commandButton class="btn btn-success btn-lg btn-block" id="registerVal" action="#{customerModel.verifyCustomer()}" type="submit" value="Signup"/>
+                <h:messages globalOnly="false" style="background-color:red; color:white;margin-bottom:5px; list-style:none; height:4em;" class="form-control"></h:messages>
             </h:form>
         </div>
     </h:body>
