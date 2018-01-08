@@ -108,5 +108,4 @@ public class Customer extends SuperEntity implements Serializable {
         this.id = id;
     }
 
-   
 }
