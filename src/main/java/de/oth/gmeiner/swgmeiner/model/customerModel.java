@@ -37,6 +37,7 @@ public class customerModel implements Serializable {
     private String username = "";
     private String email = "";
     private String password = "";
+    private String password2 = "";
     private Customer customer;
     private double amount;
     //Address
@@ -63,7 +64,7 @@ public class customerModel implements Serializable {
     }
 
     public String loginCustomer() {
-         
+
         if (this.email.equals("admin") && this.email.equals("admin")) {
             return "admin";
         }
@@ -74,16 +75,16 @@ public class customerModel implements Serializable {
             session.setAttribute("user", this.customer);
             return "home";
         } else {
-             FacesContext.getCurrentInstance().addMessage("registerForm:loginVal",new FacesMessage("Password or E-mail are not correct")); 
+            FacesContext.getCurrentInstance().addMessage("registerForm:loginVal", new FacesMessage("Password or E-mail are not correct"));
             this.password = "";
-          
+
             return "login";
 
         }
     }
 
     public String logout() {
-      
+
         HttpSession session = Util.getSession();
         session.invalidate();
         this.customer = null;
@@ -120,31 +121,35 @@ public class customerModel implements Serializable {
     }
 
     public String verifyCustomer() {
-        if(this.city.equals("") || this.country.equals("") || this.postalCode.equals("") || this.street.equals("") || this.prename.equals("") || this.surname.equals("") || this.email.equals("") || this.password.equals("")) {
-            FacesContext.getCurrentInstance().addMessage("registerForm:registerVal",new FacesMessage("Please fill all fields")); 
+        if (this.city.equals("") || this.password2.equals("") || this.country.equals("") || this.postalCode.equals("") || this.street.equals("") || this.prename.equals("") || this.surname.equals("") || this.email.equals("") || this.password.equals("")) {
+            FacesContext.getCurrentInstance().addMessage("registerForm:registerVal", new FacesMessage("Please fill all fields"));
         } else {
-        Address a = new Address();
-        a.setCity(this.city);
-        a.setCountry(this.country);
-        a.setPostCode(this.postalCode);
-        a.setStreet(this.street);
+            if (this.password.equals(this.password2)) {
+                Address a = new Address();
+                a.setCity(this.city);
+                a.setCountry(this.country);
+                a.setPostCode(this.postalCode);
+                a.setStreet(this.street);
 
-        Customer c = new Customer();
-        c.setPrename(this.prename);
-        c.setSurname(this.surname);
-        c.setEmail(this.email);
-        c.setUsername(this.username);
-        c.setPassword(customerService.hashPassword(this.password));
-        c.setAddress(a);
+                Customer c = new Customer();
+                c.setPrename(this.prename);
+                c.setSurname(this.surname);
+                c.setEmail(this.email);
+                c.setUsername(this.username);
+                c.setPassword(customerService.hashPassword(this.password));
+                c.setAddress(a);
 
-        this.customer = customerService.signup(c);
-        if(this.customer != null) {
-        return "home";
+                this.customer = customerService.signup(c);
+                if (this.customer != null) {
+                    return "home";
                 } else {
-                FacesContext.getCurrentInstance().addMessage("registerForm:EmailVal",new FacesMessage("E-mail already in use")); 
-                return "signup";
+                    FacesContext.getCurrentInstance().addMessage("registerForm:EmailVal", new FacesMessage("E-mail already in use"));
+                    return "signup";
                 }
-               
+            } else {
+                FacesContext.getCurrentInstance().addMessage("registerForm:PasswordVal", new FacesMessage("Passwords do not match!"));
+                return "signup";
+            }
         }
         return "signup";
     }
@@ -189,12 +194,10 @@ public class customerModel implements Serializable {
             return output;
         }
     }
-    
-    
 
     public String deleteAccount() {
 
-        customerService.deleteAccount(this.current_account,transferService.getTransferbyAccount(current_account));
+        customerService.deleteAccount(this.current_account, transferService.getTransferbyAccount(current_account));
         return "home";
     }
 
@@ -262,9 +265,9 @@ public class customerModel implements Serializable {
 
     @Inject
     private customerService customerService;
- @Inject
+    @Inject
     private transferService transferService;
-    
+
     public Customer getCustomer() {
         return customer;
     }
@@ -368,5 +371,15 @@ public class customerModel implements Serializable {
     public void setAccountTypeConverter(AccountTypeConverter AccountTypeConverter) {
         this.accountTypeConverter = AccountTypeConverter;
     }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+    
+    
 
 }

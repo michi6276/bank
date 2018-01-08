@@ -29,7 +29,6 @@ public class Customer extends SuperEntity implements Serializable {
     private Long id;
     String username;
     String password;
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
