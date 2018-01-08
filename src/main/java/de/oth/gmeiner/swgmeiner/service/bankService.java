@@ -27,8 +27,9 @@ public class bankService {
 
     @Inject
     customerService custService;
+
     // Interest
-    @Schedule( hour = "*/3", persistent = false)
+    @Schedule(hour = "*/3", persistent = false)
     public void interest() {
 
         List<Account> acc = custService.allAccounts();
@@ -38,9 +39,9 @@ public class bankService {
 
                 if (a.getAccountType() != null) {
                     double interest = (a.getAccountType().getInterest() / 100) * a.getAccountBalance();
-                    interest = interest*100;
+                    interest = interest * 100;
                     interest = Math.round(interest);
-                    interest = interest/100;
+                    interest = interest / 100;
                     a.setAccountBalance(a.getAccountBalance() + interest);
                     Transfer t = new Transfer();
                     t.setAmount(interest);
@@ -48,16 +49,16 @@ public class bankService {
                     t.setPurpose("Interest");
                     t.setReceiver(a);
                     t.setTransmitter(null);
-                    
-                    custService.updateAccount(a,t);
+
+                    custService.updateAccount(a, t);
                 }
             }
         }
 
     }
-    
+
     // Charges
-    @Schedule( hour = "*/24", persistent = false)
+    @Schedule(hour = "*/24", persistent = false)
     public void charges() {
 
         List<Account> acc = custService.allAccounts();
@@ -66,18 +67,18 @@ public class bankService {
             if (a.getAccountBalance() > 0) {
 
                 if (a.getAccountType() != null) {
-                   double charges =  a.getAccountType().getCharges();
-                   charges = charges*100;
-                   charges = Math.round(charges);
-                   charges = charges/100;
+                    double charges = a.getAccountType().getCharges();
+                    charges = charges * 100;
+                    charges = Math.round(charges);
+                    charges = charges / 100;
                     a.setAccountBalance(a.getAccountBalance() - charges);
-                     Transfer t = new Transfer();
+                    Transfer t = new Transfer();
                     t.setAmount(charges);
                     t.setDate(new Date());
                     t.setPurpose("Charges");
                     t.setTransmitter(a);
                     t.setReceiver(null);
-                    custService.updateAccount(a,t);
+                    custService.updateAccount(a, t);
                 }
             }
         }

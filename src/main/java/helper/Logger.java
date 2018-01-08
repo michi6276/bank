@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 
 /**
  *
- *  @author Michael
+ * @author Michael
  */
 @ApplicationScoped
 public class Logger {
@@ -19,22 +19,22 @@ public class Logger {
     @Produces
     @ApplicationScoped
     @OptionCustomer
-    public org.apache.logging.log4j.Logger customerLogger () {  
-        return LogManager.getLogger(customerService.class); 
-    }  
-    
+    public org.apache.logging.log4j.Logger customerLogger() {
+        return LogManager.getLogger(customerService.class);
+    }
+
     @Produces
     @ApplicationScoped
     @OptionAccount
-    public org.apache.logging.log4j.Logger accountLogger () {  
-        return LogManager.getLogger(customerService.class); 
-    }  
-    
+    public org.apache.logging.log4j.Logger accountLogger() {
+        return LogManager.getLogger(customerService.class);
+    }
+
     @Produces
     @ApplicationScoped
     @OptionTransfer
-    public org.apache.logging.log4j.Logger transferLogger () {  
-        return LogManager.getLogger(transferService.class); 
-    }  
-    
+    public org.apache.logging.log4j.Logger transferLogger() {
+        return LogManager.getLogger(transferService.class);
+    }
+
 }

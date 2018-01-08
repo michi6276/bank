@@ -41,15 +41,15 @@ public class customerService {
     @Inject
     @OptionCustomer
     private Logger loggerCustomer;
-    
+
     @Inject
     @OptionAccount
     private Logger loggerAccount;
-    
+
     @Inject
     @OptionTransfer
     private Logger loggerTransfer;
-    
+
     public static void newAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -68,11 +68,11 @@ public class customerService {
 
             Customer customer = entityManager.find(Customer.class, Id);
             // entityManager.find(Customer.class, Id);
-          //  if (customer.getPassword().equals(password)) {
-                if(checkPassword(password,customer.getPassword())) {
+            //  if (customer.getPassword().equals(password)) {
+            if (checkPassword(password, customer.getPassword())) {
                 return customer;
             } else {
-                    
+
                 return null;
             }
         }
@@ -117,7 +117,7 @@ public class customerService {
         t.setReceiver(entityManager.find(Account.class, account.getId()));
         t.setTransmitter(null);
         entityManager.persist(t);
-        loggerTransfer.info("new Transfer created: "+t.getId());
+        loggerTransfer.info("new Transfer created: " + t.getId());
         return account.getAccountBalance();
     }
 
@@ -134,7 +134,7 @@ public class customerService {
         t.setTransmitter(entityManager.find(Account.class, account.getId()));
         t.setReceiver(null);
         entityManager.persist(t);
-        loggerTransfer.info("new Transfer created: "+t.getId());
+        loggerTransfer.info("new Transfer created: " + t.getId());
         return false;
     }
 
@@ -147,7 +147,7 @@ public class customerService {
         account.setAccountType(a);
         // account.setAccountType(AccountType.BankBook);
         entityManager.persist(account);
-        loggerAccount.info("new Account created: "+account.getId());
+        loggerAccount.info("new Account created: " + account.getId());
         return account;
     }
 
@@ -167,26 +167,26 @@ public class customerService {
     }
 
     @Transactional
-    public boolean deleteAccount(Account acc,ArrayList<Transfer> list) {
-            
-        for(Transfer t : list){
-       t.setReceiver(null);
-       t.setTransmitter(null);
-       entityManager.merge(t);
+    public boolean deleteAccount(Account acc, ArrayList<Transfer> list) {
+
+        for (Transfer t : list) {
+            t.setReceiver(null);
+            t.setTransmitter(null);
+            entityManager.merge(t);
             entityManager.remove(entityManager.find(Transfer.class, t.getId()));
         }
-        
+
         Account account = entityManager.find(Account.class, acc.getId());
-            account.setAccountType(null);
-            account.setCustomer(null);
-             entityManager.merge(account);
-             entityManager.remove(account);
-         
-         
+        account.setAccountType(null);
+        account.setCustomer(null);
+        entityManager.merge(account);
+        entityManager.remove(account);
+
         return true;
 
     }
 
+    @Transactional
     public AccountType getTypebyId(long value) {
 
         /*   Query q = entityManager.createQuery("SELECT a.id FROM AccountType as a WHERE a.name =:name");
@@ -195,10 +195,11 @@ public class customerService {
         List<Long> type_id = q.getResultList();
        AccountType a = entityManager.find(AccountType.class,type_id.get(0)); */
         AccountType a = entityManager.find(AccountType.class, value);
-     
+
         return a;
     }
 
+    @Transactional
     public Collection<AccountType> allTypes() {
 
         Query q = entityManager.createQuery("SELECT a FROM AccountType a");
@@ -209,6 +210,7 @@ public class customerService {
         return type_id;
     }
 
+    @Transactional
     public List<Account> allAccounts() {
 
         Query q = entityManager.createQuery("SELECT a FROM Account a");
@@ -220,30 +222,29 @@ public class customerService {
     }
 
     @Transactional
-    public void updateAccount(Account a,Transfer t) {
-                
+    public void updateAccount(Account a, Transfer t) {
+
         entityManager.merge(a);
         entityManager.merge(t);
     }
-  
-    
-    
-     public static String hashPassword(String password_plaintext) {
-		String salt = BCrypt.gensalt(12);
-		String hashed_password = BCrypt.hashpw(password_plaintext, salt);
-                System.out.println("PASSWORT: " + hashed_password);
-		return(hashed_password);
-	}
-      
-      public static boolean checkPassword(String password_plaintext, String stored_hash) {
-		boolean password_verified = false;
 
-		if(null == stored_hash || !stored_hash.startsWith("$2a$"))
-			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
+    public static String hashPassword(String password_plaintext) {
+        String salt = BCrypt.gensalt(12);
+        String hashed_password = BCrypt.hashpw(password_plaintext, salt);
+        System.out.println("PASSWORT: " + hashed_password);
+        return (hashed_password);
+    }
 
-		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+    public static boolean checkPassword(String password_plaintext, String stored_hash) {
+        boolean password_verified = false;
 
-		return(password_verified);
-	}
+        if (null == stored_hash || !stored_hash.startsWith("$2a$")) {
+            throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
+        }
+
+        password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+
+        return (password_verified);
+    }
 
 }

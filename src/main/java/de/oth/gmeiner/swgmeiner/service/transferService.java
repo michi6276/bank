@@ -33,7 +33,7 @@ public class transferService {
     @Inject
     @OptionTransfer
     private Logger logger;
-    
+
     public static void newAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -46,13 +46,13 @@ public class transferService {
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
         List<Long> customer = q.getResultList();
-         if(customer.isEmpty()) {
-               return null;
+        if (customer.isEmpty()) {
+            return null;
         }
-            c = entityManager.find(Customer.class, customer.get(0));
-            
-            return c;
-        
+        c = entityManager.find(Customer.class, customer.get(0));
+
+        return c;
+
     }
     @PersistenceContext(unitName = "SWGmeiner_pu")
     private EntityManager entityManager;
@@ -82,31 +82,30 @@ public class transferService {
     }
 
     @Transactional
-    public Transfer CreateTransfer(String t, String r, double amount,String purpose) {
+    public Transfer CreateTransfer(String t, String r, double amount, String purpose) {
         Account transmitter = this.getAccountbyIban(t);
         Account receiver = this.getAccountbyIban(r);
-        if(r != null && t != null) {
-        receiver.setAccountBalance(receiver.getAccountBalance() + amount);
-        transmitter.setAccountBalance(transmitter.getAccountBalance() - amount);
-        entityManager.merge(receiver);
-        entityManager.merge(transmitter);
+        if (r != null && t != null) {
+            receiver.setAccountBalance(receiver.getAccountBalance() + amount);
+            transmitter.setAccountBalance(transmitter.getAccountBalance() - amount);
+            entityManager.merge(receiver);
+            entityManager.merge(transmitter);
 
-        Transfer tr = new Transfer();
-        tr.setAmount(amount);
-        tr.setDate(new Date());
-        tr.setPurpose(purpose);
-        tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
-        tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
+            Transfer tr = new Transfer();
+            tr.setAmount(amount);
+            tr.setDate(new Date());
+            tr.setPurpose(purpose);
+            tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
+            tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
 
-        entityManager.persist(tr);
-        logger.info("new Transfer created : "+tr.getId());
-        return tr;
-        }
-        else {
+            entityManager.persist(tr);
+            logger.info("new Transfer created : " + tr.getId());
+            return tr;
+        } else {
             System.out.println("hallo");
             return null;
         }
-        
+
     }
 
     @Transactional
