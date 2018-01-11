@@ -38,6 +38,10 @@ and open the template in the editor.
 
                     <tbody>
                         <tr>
+                            <td>Account Type:</td>
+                            <td>#{customerModel.current_account.accountType.name} €</td>
+                        </tr>
+                        <tr>
                             <td>Surname:</td>
                             <td>#{customerModel.customer.surname}</td>
                         </tr><tr>
@@ -56,6 +60,7 @@ and open the template in the editor.
                             <td>Account Balance:</td>
                             <td>#{customerModel.current_account.accountBalance} €</td>
                         </tr>
+                        
 
 
                     </tbody>
