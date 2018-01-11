@@ -29,7 +29,7 @@ public class bankService {
     customerService custService;
 
     // Interest
-    @Schedule(hour = "*/3", persistent = false)
+    @Schedule(hour = "*/5", persistent = false)
     public void interest() {
 
         List<Account> acc = custService.allAccounts();
@@ -39,9 +39,8 @@ public class bankService {
 
                 if (a.getAccountType() != null) {
                     double interest = (a.getAccountType().getInterest() / 100) * a.getAccountBalance();
-                    interest = interest * 100;
-                    interest = Math.round(interest);
-                    interest = interest / 100;
+                   int i = (int) interest*100;
+                   interest = i/100;
                     a.setAccountBalance(a.getAccountBalance() + interest);
                     Transfer t = new Transfer();
                     t.setAmount(interest);
