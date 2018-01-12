@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
@@ -103,6 +105,7 @@ public class transferService {
                 logger.info("new Transfer created : " + tr.getId());
                 return tr;
             } else {
+
                 return null;
             }
         } else {

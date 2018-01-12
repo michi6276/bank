@@ -53,7 +53,8 @@
                     </div>
                 <br></br> <label>Amount:</label>
                           <br></br><h:inputText value="#{transferModel.amount}"/><br></br><br></br>
-                          <h:commandButton class="btn btn-primary btn-md" action="#{transferModel.createTransfer()}" type="submit" value="Create Transfer"/>
+                          <h:commandButton class="btn btn-primary btn-md" id="transferVal" action="#{transferModel.createTransfer()}" type="submit" value="Create Transfer"/>
+                          <h:messages globalOnly="false" style="background-color:red; color:white;margin-bottom:5px; list-style:none; height:4em;" class="form-control"></h:messages>
                 
             </h:form>
         </div>

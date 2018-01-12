@@ -22,6 +22,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import de.oth.gmeiner.swgmeiner.model.customerModel;
 import de.oth.gmeiner.swgmeiner.service.transferService;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @Named
 @SessionScoped
@@ -47,6 +49,7 @@ public class transferModel implements Serializable {
     private customerService customerService;
 
     public String checkIban() {
+
         this.receiver_c = transferService.checkIban(this.iban);
         this.receiver = transferService.getAccountbyIban(this.iban);
 
@@ -57,7 +60,15 @@ public class transferModel implements Serializable {
     }
 
     public String createTransfer() {
-        this.transfer = transferService.CreateTransfer(transmitter.getIban(), receiver.getIban(), this.amount,this.purpose);
+        if (this.receiver_c == null) {
+            FacesContext.getCurrentInstance().addMessage("registerForm:ibanVal", new FacesMessage("Check IBAN first!"));
+            return "transfer";
+        }
+        this.transfer = transferService.CreateTransfer(transmitter.getIban(), receiver.getIban(), this.amount, this.purpose);
+        if (this.transfer == null) {
+            FacesContext.getCurrentInstance().addMessage("registerForm:transferVal", new FacesMessage("Not enough money!"));
+            return "transfer";
+        }
         return "home";
     }
 
@@ -160,6 +171,5 @@ public class transferModel implements Serializable {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
-    
-    
+
 }

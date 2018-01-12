@@ -132,35 +132,35 @@ public class customerModel implements Serializable {
         } else {
             pattern = Pattern.compile(EMAIL_FORM);
             matcher = pattern.matcher(this.email);
-            if(matcher.matches()){
-            if (this.password.equals(this.password2)) {
-                Address a = new Address();
-                a.setCity(this.city);
-                a.setCountry(this.country);
-                a.setPostCode(this.postalCode);
-                a.setStreet(this.street);
+            if (matcher.matches()) {
+                if (this.password.equals(this.password2)) {
+                    Address a = new Address();
+                    a.setCity(this.city);
+                    a.setCountry(this.country);
+                    a.setPostCode(this.postalCode);
+                    a.setStreet(this.street);
 
-                Customer c = new Customer();
-                c.setPrename(this.prename);
-                c.setSurname(this.surname);
-                c.setEmail(this.email);
-                c.setUsername(this.username);
-                c.setPassword(customerService.hashPassword(this.password));
-                c.setAddress(a);
+                    Customer c = new Customer();
+                    c.setPrename(this.prename);
+                    c.setSurname(this.surname);
+                    c.setEmail(this.email);
+                    c.setUsername(this.username);
+                    c.setPassword(customerService.hashPassword(this.password));
+                    c.setAddress(a);
 
-                this.customer = customerService.signup(c);
-                if (this.customer != null) {
-                    return "home";
+                    this.customer = customerService.signup(c);
+                    if (this.customer != null) {
+                        return "home";
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage("registerForm:EmailVal", new FacesMessage("E-mail already in use"));
+                        return "signup";
+                    }
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("registerForm:EmailVal", new FacesMessage("E-mail already in use"));
+                    FacesContext.getCurrentInstance().addMessage("registerForm:PasswordVal", new FacesMessage("Passwords do not match!"));
                     return "signup";
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("registerForm:PasswordVal", new FacesMessage("Passwords do not match!"));
-                return "signup";
-            }
-            } else {
-                 FacesContext.getCurrentInstance().addMessage("registerForm:EmailFalse", new FacesMessage("Email is not in the correct form!"));
+                FacesContext.getCurrentInstance().addMessage("registerForm:EmailFalse", new FacesMessage("Email is not in the correct form!"));
             }
         }
         return "signup";
