@@ -165,7 +165,7 @@ public class customerModel implements Serializable {
         Account a = new Account();
         int i = new Random().nextInt(9999999);
         String x = "DE" + new Random().nextInt(9999999) + new Random().nextInt(9999999);
-        a.setAccountBalance(0);
+        a.setAccountBalance(1000);
         a.setAccountCode(753000);
         a.setAccountNr(i);
         a.setIban(x);
@@ -276,14 +276,7 @@ public class customerModel implements Serializable {
         this.customer = customer;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
+  
     public String getPrename() {
         return prename;
     }
