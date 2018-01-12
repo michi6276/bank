@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -58,6 +60,10 @@ public class customerModel implements Serializable {
     private AccountTypeConverter accountTypeConverter;
     @Inject
     private PromoService promoService;
+
+    private Matcher matcher;
+    private Pattern pattern;
+    private static final String EMAIL_FORM = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public Collection<AccountType> allTypes() {
         return this.customerService.allTypes();
@@ -124,6 +130,9 @@ public class customerModel implements Serializable {
         if (this.city.equals("") || this.password2.equals("") || this.country.equals("") || this.postalCode.equals("") || this.street.equals("") || this.prename.equals("") || this.surname.equals("") || this.email.equals("") || this.password.equals("")) {
             FacesContext.getCurrentInstance().addMessage("registerForm:registerVal", new FacesMessage("Please fill all fields"));
         } else {
+            pattern = Pattern.compile(EMAIL_FORM);
+            matcher = pattern.matcher(this.email);
+            if(matcher.matches()){
             if (this.password.equals(this.password2)) {
                 Address a = new Address();
                 a.setCity(this.city);
@@ -149,6 +158,9 @@ public class customerModel implements Serializable {
             } else {
                 FacesContext.getCurrentInstance().addMessage("registerForm:PasswordVal", new FacesMessage("Passwords do not match!"));
                 return "signup";
+            }
+            } else {
+                 FacesContext.getCurrentInstance().addMessage("registerForm:EmailFalse", new FacesMessage("Email is not in the correct form!"));
             }
         }
         return "signup";
@@ -276,7 +288,6 @@ public class customerModel implements Serializable {
         this.customer = customer;
     }
 
-  
     public String getPrename() {
         return prename;
     }
@@ -372,7 +383,13 @@ public class customerModel implements Serializable {
     public void setPassword2(String password2) {
         this.password2 = password2;
     }
-    
-    
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
 }
