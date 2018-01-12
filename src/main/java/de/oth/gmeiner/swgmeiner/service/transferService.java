@@ -86,23 +86,27 @@ public class transferService {
         Account transmitter = this.getAccountbyIban(t);
         Account receiver = this.getAccountbyIban(r);
         if (r != null && t != null) {
-            receiver.setAccountBalance(receiver.getAccountBalance() + amount);
-            transmitter.setAccountBalance(transmitter.getAccountBalance() - amount);
-            entityManager.merge(receiver);
-            entityManager.merge(transmitter);
+            if (transmitter.getAccountBalance() >= amount) {
+                receiver.setAccountBalance(receiver.getAccountBalance() + amount);
+                transmitter.setAccountBalance(transmitter.getAccountBalance() - amount);
+                entityManager.merge(receiver);
+                entityManager.merge(transmitter);
 
-            Transfer tr = new Transfer();
-            tr.setAmount(amount);
-            tr.setDate(new Date());
-            tr.setPurpose(purpose);
-            tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
-            tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
+                Transfer tr = new Transfer();
+                tr.setAmount(amount);
+                tr.setDate(new Date());
+                tr.setPurpose(purpose);
+                tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
+                tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
 
-            entityManager.persist(tr);
-            logger.info("new Transfer created : " + tr.getId());
-            return tr;
+                entityManager.persist(tr);
+                logger.info("new Transfer created : " + tr.getId());
+                return tr;
+            } else {
+                return null;
+            }
         } else {
-            System.out.println("hallo");
+
             return null;
         }
 
