@@ -29,7 +29,7 @@ public class bankService {
     customerService custService;
 
     // Interest
-    @Schedule(hour = "*/5", persistent = false)
+    @Schedule(hour = "*/6", persistent = false)
     public void interest() {
 
         List<Account> acc = custService.allAccounts();
