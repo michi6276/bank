@@ -77,7 +77,7 @@ and open the template in the editor.
                 <h:commandButton class="btn btn-primary btn-md" action="lastBookings.xhtml" type="submit" value="View Last Bookings"/>
                 <h:commandButton class="btn btn-primary btn-md" action="depositMoney.xhtml" type="submit" value="Deposit Money"/>
                 <h:commandButton class="btn btn-primary btn-md" action="moneyPayout.xhtml" type="submit" value="Money Payout"/>
-                <h:commandButton class="btn btn-info btn-md" action="transfer.xhtml" type="submit" value="Create Transfer"/>
+                <h:commandButton class="btn btn-info btn-md" action="#{transferModel.toTransfer()}" type="submit" value="Create Transfer"/>
                 <h:commandButton class="btn btn-danger btn-md" action="#{customerModel.deleteAccount()}" type="submit" value="Delete Account"/>
                 <br></br><br></br><br></br>
 

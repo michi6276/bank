@@ -69,7 +69,15 @@ public class transferModel implements Serializable {
             FacesContext.getCurrentInstance().addMessage("registerForm:transferVal", new FacesMessage("Not enough money!"));
             return "transfer";
         }
+        this.receiver_c = null;
         return "home";
+    }
+    
+     public String toTransfer() {
+        this.receiver = null;
+        this.receiver_c = null;
+        this.iban = null;
+        return "transfer";
     }
 
     public String isTransmitter(Transfer t, Account a) {
