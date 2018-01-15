@@ -14,31 +14,31 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"/>
         <!-- load fontawesome -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
-               <ui:include src="resources/menu.xhtml" />
+        <ui:include src="resources/menu.xhtml" />
     </h:head>
     <h:body>
         <nav class='navbar navbar-default'>
-		<div class='container'>
-			<div class="navbar-collapse collapse">
-				<ul class='nav navbar-nav navbar-left'>
-					
-				</ul>
-			</div>
-		</div>
-	</nav>
+            <div class='container'>
+                <div class="navbar-collapse collapse">
+                    <ul class='nav navbar-nav navbar-left'>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <h:form>
-                    <div class="form-group">
-                            <label>E-mail</label>
-                            <h:inputText class="form-control" value="#{customerModel.email}"/>
-                    </div>
-                    <div class="form-group">
-                            <label>Password</label>
-                            <h:inputSecret class="form-control" value="#{customerModel.password}"/>
-                    </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <h:inputText class="form-control" value="#{customerModel.email}"/>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <h:inputSecret class="form-control" value="#{customerModel.password}"/>
+                </div>
                 <h:commandButton class="btn btn-success btn-lg btn-block" id="loginVal" action="#{customerModel.loginCustomer()}" type="submit" value="Login"/>
                 <h:messages globalOnly="false" style="background-color:red; color:white;margin-bottom:5px; list-style:none; height:4em;" class="form-control"></h:messages>
-               <h:commandButton class="btn btn-success btn-lg btn-block" action="signup" type="submit" value="Signup"/>
+                <h:commandButton class="btn btn-success btn-lg btn-block" action="signup" type="submit" value="Signup"/>
             </h:form>
         </div>
     </h:body>

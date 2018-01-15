@@ -45,7 +45,6 @@ public class Address extends SuperEntity implements Serializable {
         this.id = id;
     }
 
-  
     public String getStreet() {
         return street;
     }

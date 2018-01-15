@@ -14,29 +14,29 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
         <!-- load fontawesome -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/>
-            <ui:include src="resources/menu.xhtml" />
+        <ui:include src="resources/menu.xhtml" />
     </h:head>
     <h:body>
-        
+
         <nav class='navbar navbar-default'>
-		<div class='container'>
-			<div class="navbar-collapse collapse">
-				<ul class='nav navbar-nav navbar-left'>
-					
-				</ul>
-			</div>
-		</div>
-	</nav>
+            <div class='container'>
+                <div class="navbar-collapse collapse">
+                    <ul class='nav navbar-nav navbar-left'>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <h:form>
-              <h:commandButton class="btn btn-primary btn-md" action="Account" type="submit" value="Back"/>
-                    <div class="form-group">
-                        <label><FONT SIZE="7">Money Payout on the Account: #{customerModel.current_account.iban}</FONT></label><br></br>
-                         <br></br> <label>Amount:</label>
-                          <br></br><h:inputText value="#{customerModel.amount}"/>
-                    </div>
-                      <br></br>          
-             
+                <h:commandButton class="btn btn-primary btn-md" action="Account" type="submit" value="Back"/>
+                <div class="form-group">
+                    <label><FONT SIZE="7">Money Payout on the Account: #{customerModel.current_account.iban}</FONT></label><br></br>
+                    <br></br> <label>Amount:</label>
+                    <br></br><h:inputText value="#{customerModel.amount}"/>
+                </div>
+                <br></br>          
+
                 <h:commandButton class="btn btn-primary btn-md" action="#{customerModel.moneyPayout()}" type="submit" value="Payout"/>
             </h:form>
         </div>

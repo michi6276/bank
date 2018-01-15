@@ -9,18 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class SuperEntity implements Serializable{
-    
+public abstract class SuperEntity implements Serializable {
+
     private static final long serialVersionUID = 0L;
-    
+
     @Id
-    @Column( name = "id" )
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    public SuperEntity(){
+
+    public SuperEntity() {
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -51,7 +51,5 @@ public abstract class SuperEntity implements Serializable{
     public String toString() {
         return this.getClass().getSimpleName() + " (id=" + id + ')';
     }
-    
-    
 
 }

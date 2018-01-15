@@ -63,7 +63,7 @@ and open the template in the editor.
                                     <f:converter binding="#{customerModel.accountTypeConverter}"/>
                                     <f:selectItems value="#{customerModel.allTypes()}" var="AccountType" itemLabel="#{AccountType.name}"/>
                                 </h:selectOneMenu> *</td>
-                         
+
                         </tr>
 
 
@@ -74,10 +74,10 @@ and open the template in the editor.
                 <h:commandButton class="btn btn-primary btn-md" action="#{customerModel.createNewAccount()}" type="submit" value="Confirm"/>
                 <br></br><br></br><br></br><br></br>
                 *: Savings:  Charges: 2,0 €;  Interest: 5,0%                     <br></br>
-                   Giro Account:  Charges: 2,0 €;  Interest: 2,0%                    <br></br>
-                   Debits Card:  Charges: 3,0 €;  Interest: 1,0%
-                   
-               
+                Giro Account:  Charges: 2,0 €;  Interest: 2,0%                    <br></br>
+                Debits Card:  Charges: 3,0 €;  Interest: 1,0%
+
+
             </h:form>
         </div>
     </h:body>

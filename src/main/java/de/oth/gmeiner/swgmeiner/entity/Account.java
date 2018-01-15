@@ -80,9 +80,9 @@ public class Account extends SuperEntity implements Serializable {
 
     public double getAccountBalance() {
         //DecimalFormat f = new DecimalFormat("#0.00"); 
-        accountBalance = accountBalance*100;
+        accountBalance = accountBalance * 100;
         accountBalance = Math.round(accountBalance);
-        accountBalance = accountBalance/100;
+        accountBalance = accountBalance / 100;
         return accountBalance;
     }
 
@@ -118,7 +118,5 @@ public class Account extends SuperEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
 }

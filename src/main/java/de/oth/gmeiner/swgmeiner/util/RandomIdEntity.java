@@ -9,12 +9,12 @@ public abstract class RandomIdEntity extends SingleIdEntity<String> {
 
     @Id
     protected String id;
-    
+
     // Nutzt die Java-Implementierung des UUID-Algorithmus
-    protected RandomIdEntity(){
+    protected RandomIdEntity() {
         this.id = randomUUID().toString();
     }
-    
+
     @Override
     public String getId() {
         return this.id;

@@ -14,33 +14,33 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
         <!-- load fontawesome -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/>
-            <ui:include src="resources/menu.xhtml" />
+        <ui:include src="resources/menu.xhtml" />
     </h:head>
     <h:body>
-        
+
         <nav class='navbar navbar-default'>
-		<div class='container'>
-			<div class="navbar-collapse collapse">
-				<ul class='nav navbar-nav navbar-left'>
-					
-				</ul>
-			</div>
-		</div>
-	</nav>
+            <div class='container'>
+                <div class="navbar-collapse collapse">
+                    <ul class='nav navbar-nav navbar-left'>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <h:form>
-               <h:commandButton class="btn btn-primary btn-md" action="home" type="submit" value="back to HOME"/>
-                    <div class="form-group">
-                        <label><FONT SIZE="7">Welcome, Mr. #{customerModel.customer.surname}</FONT></label><br></br>
-                        <label><FONT SIZE="4">Your PromoCode to get 10% off your next Bike Rental:</FONT></label>
-                    </div>
+                <h:commandButton class="btn btn-primary btn-md" action="home" type="submit" value="back to HOME"/>
                 <div class="form-group">
-                        <label><FONT SIZE="7">#{customerModel.getPromoCode()}</FONT></label><br></br>
-                        
-                    </div>
-                                
-             
-                
+                    <label><FONT SIZE="7">Welcome, Mr. #{customerModel.customer.surname}</FONT></label><br></br>
+                    <label><FONT SIZE="4">Your PromoCode to get 10% off your next Bike Rental:</FONT></label>
+                </div>
+                <div class="form-group">
+                    <label><FONT SIZE="7">#{customerModel.getPromoCode()}</FONT></label><br></br>
+
+                </div>
+
+
+
             </h:form>
         </div>
     </h:body>

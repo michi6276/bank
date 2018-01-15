@@ -50,8 +50,6 @@ public class AccountType extends SuperEntity implements Serializable {
         this.charges = charges;
     }
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -60,7 +58,4 @@ public class AccountType extends SuperEntity implements Serializable {
         this.id = id;
     }
 
-  
-
-    
 }

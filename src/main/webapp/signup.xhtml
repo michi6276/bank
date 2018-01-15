@@ -10,59 +10,59 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"/>
         <!-- load fontawesome -->
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
-               <ui:include src="resources/menu.xhtml" />
+        <ui:include src="resources/menu.xhtml" />
     </h:head>
     <h:body>
         <nav class='navbar navbar-default'>
-		<div class='container'>
-			<div class="navbar-collapse collapse">
-				<ul class='nav navbar-nav navbar-left'>
-					
-				</ul>
-			</div>
-		</div>
-	</nav>
+            <div class='container'>
+                <div class="navbar-collapse collapse">
+                    <ul class='nav navbar-nav navbar-left'>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <h:form>
-                    <div class="form-group">
-                            <label>Prename</label>
-                            <h:inputText value="#{customerModel.prename}"/>
-                    </div>
-                    <div class="form-group">
-                            <label>Surname</label>
-                            <h:inputText value="#{customerModel.surname}"/>
-                    </div>
-              
                 <div class="form-group">
-                            <label>Email</label>
-                            <h:inputText value="#{customerModel.email}"/>
-                    </div>
+                    <label>Prename</label>
+                    <h:inputText value="#{customerModel.prename}"/>
+                </div>
                 <div class="form-group">
-                            <label>Street</label>
-                           <h:inputText value="#{customerModel.street}"/>
-                    </div>
+                    <label>Surname</label>
+                    <h:inputText value="#{customerModel.surname}"/>
+                </div>
+
                 <div class="form-group">
-                            <label>City</label>
-                            <h:inputText value="#{customerModel.city}"/>
-                    </div>
+                    <label>Email</label>
+                    <h:inputText value="#{customerModel.email}"/>
+                </div>
                 <div class="form-group">
-                            <label>Country</label>
-                            <h:inputText value="#{customerModel.country}"/>
-                    </div>
+                    <label>Street</label>
+                    <h:inputText value="#{customerModel.street}"/>
+                </div>
                 <div class="form-group">
-                            <label>PostCode</label>
-                            <h:inputText value="#{customerModel.postalCode}"/>
-                    </div>
+                    <label>City</label>
+                    <h:inputText value="#{customerModel.city}"/>
+                </div>
                 <div class="form-group">
-                            <label>Password</label>
-                            <h:inputSecret value="#{customerModel.password}"/>
-                    </div>
+                    <label>Country</label>
+                    <h:inputText value="#{customerModel.country}"/>
+                </div>
                 <div class="form-group">
-                            <label>Confirm Password</label>
-                            <h:inputSecret value="#{customerModel.password2}"/>
-                    </div>
-                
-               
+                    <label>PostCode</label>
+                    <h:inputText value="#{customerModel.postalCode}"/>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <h:inputSecret value="#{customerModel.password}"/>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <h:inputSecret value="#{customerModel.password2}"/>
+                </div>
+
+
                 <h:commandButton class="btn btn-success btn-lg btn-block" id="registerVal" action="#{customerModel.verifyCustomer()}" type="submit" value="Signup"/>
                 <h:messages globalOnly="false" style="background-color:red; color:white;margin-bottom:5px; list-style:none; height:4em;" class="form-control"></h:messages>
             </h:form>

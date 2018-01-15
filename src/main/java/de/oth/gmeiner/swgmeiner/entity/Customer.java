@@ -27,8 +27,9 @@ public class Customer extends SuperEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     String password;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -52,7 +53,6 @@ public class Customer extends SuperEntity implements Serializable {
     public String getEmail() {
         return email;
     }
-
 
     public void setPassword(String password) {
         this.password = password;
@@ -84,7 +84,7 @@ public class Customer extends SuperEntity implements Serializable {
     }
 
     public Customer(String password, String prename, String surname, Address address, String email) {
-       
+
         this.password = password;
         this.prename = prename;
         this.surname = surname;

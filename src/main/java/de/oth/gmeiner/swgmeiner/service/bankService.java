@@ -39,9 +39,9 @@ public class bankService {
 
                 if (a.getAccountType() != null) {
                     double interest = (a.getAccountType().getInterest() / 100) * a.getAccountBalance();
-                   interest = interest*100;
-                   interest = Math.round(interest);
-                   interest = interest/100;
+                    interest = interest * 100;
+                    interest = Math.round(interest);
+                    interest = interest / 100;
                     a.setAccountBalance(a.getAccountBalance() + interest);
                     Transfer t = new Transfer();
                     t.setAmount(interest);

@@ -87,7 +87,6 @@ public class customerModel implements Serializable {
 
         }
     }
-   
 
     public String logout() {
 
@@ -144,7 +143,7 @@ public class customerModel implements Serializable {
                     c.setPrename(this.prename);
                     c.setSurname(this.surname);
                     c.setEmail(this.email);
-                    
+
                     c.setPassword(customerService.hashPassword(this.password));
                     c.setAddress(a);
 
@@ -295,8 +294,6 @@ public class customerModel implements Serializable {
     public void setPrename(String prename) {
         this.prename = prename;
     }
-
-  
 
     public String getEmail() {
         return email;

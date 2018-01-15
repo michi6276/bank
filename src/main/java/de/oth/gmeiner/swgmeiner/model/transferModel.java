@@ -72,8 +72,8 @@ public class transferModel implements Serializable {
         this.receiver_c = null;
         return "home";
     }
-    
-     public String toTransfer() {
+
+    public String toTransfer() {
         this.receiver = null;
         this.receiver_c = null;
         this.iban = null;
