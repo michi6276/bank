@@ -60,6 +60,14 @@ and open the template in the editor.
                             <td>Account Balance:</td>
                             <td>#{customerModel.current_account.accountBalance} €</td>
                         </tr>
+                        <tr>
+                            <td>Charges:</td>
+                            <td>#{customerModel.current_account.accountType.charges} €</td>
+                        </tr>
+                        <tr>
+                            <td>Interest:</td>
+                            <td>#{customerModel.current_account.accountType.interest} %</td>
+                        </tr>
                         
 
 

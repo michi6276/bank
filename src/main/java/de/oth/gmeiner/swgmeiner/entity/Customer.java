@@ -27,14 +27,10 @@ public class Customer extends SuperEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    String username;
+    
     String password;
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public String getPassword() {
@@ -57,9 +53,6 @@ public class Customer extends SuperEntity implements Serializable {
         return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -90,8 +83,8 @@ public class Customer extends SuperEntity implements Serializable {
     public Customer() {
     }
 
-    public Customer(String username, String password, String prename, String surname, Address address, String email) {
-        this.username = username;
+    public Customer(String password, String prename, String surname, Address address, String email) {
+       
         this.password = password;
         this.prename = prename;
         this.surname = surname;
