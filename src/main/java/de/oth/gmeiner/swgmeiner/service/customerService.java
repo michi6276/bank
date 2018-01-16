@@ -156,7 +156,7 @@ public class customerService {
         account.setCustomer(null);
         entityManager.merge(account);
         entityManager.remove(account);
-        loggerAccount.error("Account deleted "+ account.getId());
+        loggerAccount.info("Account deleted "+ account.getId());
         return true;
     }
 
