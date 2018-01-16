@@ -37,7 +37,8 @@ and open the template in the editor.
                 </div>
                 <br></br>          
 
-                <h:commandButton class="btn btn-primary btn-md" action="#{customerModel.depositMoney()}" type="submit" value="Deposit"/>
+                <h:commandButton class="btn btn-primary btn-md" id="MoneyVal" action="#{customerModel.depositMoney()}" type="submit" value="Deposit"/>
+                <h:messages globalOnly="false" style="background-color:red; color:white;margin-bottom:5px; list-style:none; height:4em;" class="form-control"></h:messages>
             </h:form>
         </div>
     </h:body>

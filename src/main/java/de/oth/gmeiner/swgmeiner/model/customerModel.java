@@ -101,10 +101,13 @@ public class customerModel implements Serializable {
     }
 
     public String depositMoney() {
+        if(this.amount <= 0){
+            FacesContext.getCurrentInstance().addMessage("registerForm:MoneyVal", new FacesMessage("Please insert a positive amount!"));
+        }
         if (this.current_account != null) {
             customerService.depositMoney(this.current_account, this.amount);
             this.current_account = null;
-            return "home.xhtml";
+            return "home";
         } else {
             return "home";
         }

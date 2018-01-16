@@ -61,14 +61,12 @@ public class customerService {
 
         Query q = entityManager.createQuery("SELECT c.id FROM Customer as c WHERE c.email =:email");
         q.setParameter("email", email);
-        //List<Integer> result=q.getResultList();
         List<Long> c = q.getResultList();
         if (!c.isEmpty()) {
             Long Id = c.get(0);
 
             Customer customer = entityManager.find(Customer.class, Id);
-            // entityManager.find(Customer.class, Id);
-            //  if (customer.getPassword().equals(password)) {
+
             if (checkPassword(password, customer.getPassword())) {
                 return customer;
             } else {
@@ -84,7 +82,6 @@ public class customerService {
     public Customer signup(Customer customer) {
         Query q = entityManager.createQuery("SELECT c.id FROM Customer as c WHERE c.email =:email");
         q.setParameter("email", customer.getEmail());
-        //List<Integer> result=q.getResultList();
         List<Long> c = q.getResultList();
         if (c.isEmpty()) {
             entityManager.persist(customer);
@@ -97,19 +94,15 @@ public class customerService {
 
     @Transactional
     public double getBankBalance(Account account) {
-
         Account a = entityManager.find(Account.class, account.getId());
-
         return a.getAccountBalance();
     }
 
     @Transactional
     public double depositMoney(Account account, double amount) {
-
         entityManager.find(Account.class, account.getId());
         account.setAccountBalance(account.getAccountBalance() + amount);
         entityManager.merge(account);
-
         Transfer t = new Transfer();
         t.setAmount(amount);
         t.setPurpose("Deposit Money");
@@ -126,7 +119,6 @@ public class customerService {
         entityManager.find(Account.class, account.getId());
         account.setAccountBalance(account.getAccountBalance() - amount);
         entityManager.merge(account);
-
         Transfer t = new Transfer();
         t.setAmount(amount);
         t.setDate(new Date());
@@ -145,7 +137,6 @@ public class customerService {
         AccountType a = entityManager.find(AccountType.class, accType.getId());
         account.setCustomer(c1);
         account.setAccountType(a);
-        // account.setAccountType(AccountType.BankBook);
         entityManager.persist(account);
         loggerAccount.info("new Account created: " + account.getId());
         return account;
@@ -157,7 +148,6 @@ public class customerService {
         ArrayList<Account> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT a.id FROM Account as a WHERE a.customer =:id order by date desc");
         q.setParameter("id", c);
-        //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
         for (Long id : account_id) {
             array.add(entityManager.find(Account.class, id));
@@ -181,32 +171,19 @@ public class customerService {
         account.setCustomer(null);
         entityManager.merge(account);
         entityManager.remove(account);
-
         return true;
-
     }
 
     @Transactional
     public AccountType getTypebyId(long value) {
-
-        /*   Query q = entityManager.createQuery("SELECT a.id FROM AccountType as a WHERE a.name =:name");
-        q.setParameter("name", value);
-        //List<Integer> result=q.getResultList();
-        List<Long> type_id = q.getResultList();
-       AccountType a = entityManager.find(AccountType.class,type_id.get(0)); */
         AccountType a = entityManager.find(AccountType.class, value);
-
         return a;
     }
 
     @Transactional
     public Collection<AccountType> allTypes() {
-
         Query q = entityManager.createQuery("SELECT a FROM AccountType a");
-
-        //List<Integer> result=q.getResultList();
         List<AccountType> type_id = q.getResultList();
-
         return type_id;
     }
 
@@ -214,16 +191,12 @@ public class customerService {
     public List<Account> allAccounts() {
 
         Query q = entityManager.createQuery("SELECT a FROM Account a");
-
-        //List<Integer> result=q.getResultList();
         List<Account> accounts = q.getResultList();
-
         return accounts;
     }
 
     @Transactional
     public void updateAccount(Account a, Transfer t) {
-
         entityManager.merge(a);
         entityManager.merge(t);
     }
@@ -237,13 +210,10 @@ public class customerService {
 
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
-
         if (null == stored_hash || !stored_hash.startsWith("$2a$")) {
             throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
         }
-
         password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
-
         return (password_verified);
     }
 
