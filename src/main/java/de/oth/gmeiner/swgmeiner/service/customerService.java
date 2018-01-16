@@ -156,7 +156,7 @@ public class customerService {
         account.setCustomer(null);
         entityManager.merge(account);
         entityManager.remove(account);
-        loggerAccount.info("Account deleted "+ account.getId());
+        loggerAccount.info("Account deleted " + account.getId());
         return true;
     }
 
@@ -192,7 +192,7 @@ public class customerService {
         System.out.println("PASSWORT: " + hashed_password);
         return (hashed_password);
     }
-    
+
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
         if (null == stored_hash || !stored_hash.startsWith("$2a$")) {
