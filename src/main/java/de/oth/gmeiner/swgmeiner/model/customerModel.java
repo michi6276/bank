@@ -88,7 +88,7 @@ public class customerModel implements Serializable {
         }
     }
 
-   public String logout() {
+    public String logout() {
         HttpSession session = Util.getSession();
         session.invalidate();
         this.customer = null;
@@ -101,8 +101,10 @@ public class customerModel implements Serializable {
     }
 
     public String depositMoney() {
-        if(this.amount <= 0){
-            FacesContext.getCurrentInstance().addMessage("registerForm:MoneyVal", new FacesMessage("Please insert a positive amount!"));
+        if (this.amount <= 0) {
+            FacesContext.getCurrentInstance().addMessage("registerForm:moneyVal", new FacesMessage("Please insert a positive amount!"));
+            this.amount = 0.0;
+            return "depositMoney";
         }
         if (this.current_account != null) {
             customerService.depositMoney(this.current_account, this.amount);
@@ -114,6 +116,11 @@ public class customerModel implements Serializable {
     }
 
     public String moneyPayout() {
+        if (this.amount <= 0) {
+            FacesContext.getCurrentInstance().addMessage("registerForm:moneyVal", new FacesMessage("Please insert a positive amount!"));
+            this.amount = 0.0;
+            return "depositMoney";
+        }
         if (this.current_account != null) {
             customerService.moneyPayout(this.current_account, this.amount);
             this.current_account = null;
@@ -203,9 +210,9 @@ public class customerModel implements Serializable {
             return output;
         }
     }
-    
-     public boolean isLoggedIn(){
-        if(this.customer == null) {
+
+    public boolean isLoggedIn() {
+        if (this.customer == null) {
             return false;
         }
         return true;
