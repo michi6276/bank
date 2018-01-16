@@ -31,12 +31,9 @@ public class bankService {
     // Interest
     @Schedule(hour = "*/6", persistent = false)
     public void interest() {
-
         List<Account> acc = custService.allAccounts();
-
         for (Account a : acc) {
             if (a.getAccountBalance() > 0) {
-
                 if (a.getAccountType() != null) {
                     double interest = (a.getAccountType().getInterest() / 100) * a.getAccountBalance();
                     interest = interest * 100;
@@ -49,7 +46,6 @@ public class bankService {
                     t.setPurpose("Interest");
                     t.setReceiver(a);
                     t.setTransmitter(null);
-
                     custService.updateAccount(a, t);
                 }
             }
@@ -60,12 +56,9 @@ public class bankService {
     // Charges
     @Schedule(hour = "*/24", persistent = false)
     public void charges() {
-
         List<Account> acc = custService.allAccounts();
-
         for (Account a : acc) {
             if (a.getAccountBalance() > 0) {
-
                 if (a.getAccountType() != null) {
                     double charges = a.getAccountType().getCharges();
                     charges = charges * 100;

@@ -7,9 +7,7 @@ package de.oth.gmeiner.swgmeiner.service;
 
 import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.AccountType;
-
 import de.oth.gmeiner.swgmeiner.entity.Customer;
-
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import helper.BCrypt;
 import helper.qualifier.OptionAccount;
@@ -50,32 +48,24 @@ public class customerService {
     @OptionTransfer
     private Logger loggerTransfer;
 
-    public static void newAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     @PersistenceContext(unitName = "SWGmeiner_pu")
     private EntityManager entityManager;
 
     @Transactional
     public Customer login(String email, String password) {
-
         Query q = entityManager.createQuery("SELECT c.id FROM Customer as c WHERE c.email =:email");
         q.setParameter("email", email);
         List<Long> c = q.getResultList();
         if (!c.isEmpty()) {
             Long Id = c.get(0);
-
             Customer customer = entityManager.find(Customer.class, Id);
-
             if (checkPassword(password, customer.getPassword())) {
                 return customer;
             } else {
-
                 return null;
             }
         }
         return null;
-
     }
 
     @Transactional
@@ -132,7 +122,6 @@ public class customerService {
 
     @Transactional
     public Account createAccount(Account account, Customer c, AccountType accType) {
-
         Customer c1 = entityManager.find(Customer.class, c.getId());
         AccountType a = entityManager.find(AccountType.class, accType.getId());
         account.setCustomer(c1);
@@ -144,7 +133,6 @@ public class customerService {
 
     @Transactional
     public ArrayList getAccountbyCustomer(Customer c) {
-
         ArrayList<Account> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT a.id FROM Account as a WHERE a.customer =:id order by date desc");
         q.setParameter("id", c);
@@ -152,20 +140,17 @@ public class customerService {
         for (Long id : account_id) {
             array.add(entityManager.find(Account.class, id));
         }
-
         return array;
     }
 
     @Transactional
     public boolean deleteAccount(Account acc, ArrayList<Transfer> list) {
-
         for (Transfer t : list) {
             t.setReceiver(null);
             t.setTransmitter(null);
             entityManager.merge(t);
             entityManager.remove(entityManager.find(Transfer.class, t.getId()));
         }
-
         Account account = entityManager.find(Account.class, acc.getId());
         account.setAccountType(null);
         account.setCustomer(null);
@@ -189,7 +174,6 @@ public class customerService {
 
     @Transactional
     public List<Account> allAccounts() {
-
         Query q = entityManager.createQuery("SELECT a FROM Account a");
         List<Account> accounts = q.getResultList();
         return accounts;
@@ -207,7 +191,7 @@ public class customerService {
         System.out.println("PASSWORT: " + hashed_password);
         return (hashed_password);
     }
-
+    
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
         if (null == stored_hash || !stored_hash.startsWith("$2a$")) {

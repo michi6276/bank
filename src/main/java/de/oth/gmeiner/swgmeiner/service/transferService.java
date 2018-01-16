@@ -36,14 +36,12 @@ public class transferService {
     @OptionTransfer
     private Logger logger;
 
-    public static void newAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    @PersistenceContext(unitName = "SWGmeiner_pu")
+    private EntityManager entityManager;
 
     @Transactional
     public Customer checkIban(String iban) {
         Customer c;
-
         Query q = entityManager.createQuery("SELECT c.id FROM Customer as c WHERE c.id=(Select a.customer FROM Account as a WHERE a.iban=:iban)");
         q.setParameter("iban", iban);
         //List<Integer> result=q.getResultList();
@@ -52,21 +50,15 @@ public class transferService {
             return null;
         }
         c = entityManager.find(Customer.class, customer.get(0));
-
         return c;
-
     }
-    @PersistenceContext(unitName = "SWGmeiner_pu")
-    private EntityManager entityManager;
 
     @Transactional
     public boolean deleteAccount(Account acc) {
         Account account = entityManager.find(Account.class, acc.getId());
         entityManager.merge(account);
         entityManager.remove(account);
-
         return false;
-
     }
 
     @Transactional
@@ -74,7 +66,6 @@ public class transferService {
         ArrayList<Account> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT a.id FROM Account as a WHERE a.iban =:iban");
         q.setParameter("iban", iban);
-        //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
         if (account_id.isEmpty()) {
             return null;
@@ -93,23 +84,19 @@ public class transferService {
                 transmitter.setAccountBalance(transmitter.getAccountBalance() - amount);
                 entityManager.merge(receiver);
                 entityManager.merge(transmitter);
-
                 Transfer tr = new Transfer();
                 tr.setAmount(amount);
                 tr.setDate(new Date());
                 tr.setPurpose(purpose);
                 tr.setReceiver(entityManager.find(Account.class, receiver.getId()));
                 tr.setTransmitter(entityManager.find(Account.class, transmitter.getId()));
-
                 entityManager.persist(tr);
                 logger.info("new Transfer created : " + tr.getId());
                 return tr;
             } else {
-
                 return null;
             }
         } else {
-
             return null;
         }
 
@@ -120,13 +107,11 @@ public class transferService {
         ArrayList<Transfer> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT t.id FROM Transfer as t WHERE t.receiver =:acc or t.transmitter =:acc order by date desc");
         q.setParameter("acc", account);
-        //List<Integer> result=q.getResultList();
         List<Long> account_id = q.getResultList();
         for (Long id : account_id) {
             array.add(entityManager.find(Transfer.class, id));
         }
         return array;
-
     }
 
     public boolean isTransmitter(Transfer t, Account a) {
