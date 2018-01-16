@@ -88,15 +88,10 @@ public class customerModel implements Serializable {
         }
     }
 
-    public String logout() {
-
+   public String logout() {
         HttpSession session = Util.getSession();
         session.invalidate();
         this.customer = null;
-        this.current_account = null;
-        this.customer = null;
-        this.account = null;
-
         return "login";
     }
 
@@ -204,6 +199,13 @@ public class customerModel implements Serializable {
         } else {
             return output;
         }
+    }
+    
+     public boolean isLoggedIn(){
+        if(this.customer == null) {
+            return false;
+        }
+        return true;
     }
 
     public String deleteAccount() {
