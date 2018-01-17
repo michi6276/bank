@@ -16,10 +16,13 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
+import helper.qualifier.OptionAccount;
+import helper.qualifier.OptionTransfer;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -34,9 +37,17 @@ public class bankService {
     @PersistenceContext(unitName = "SWGmeiner_pu")
     private EntityManager entityManager;
 
+      @Inject
+    @OptionAccount
+    private Logger loggerAccount;
+
+    @Inject
+    @OptionTransfer
+    private Logger loggerTransfer;
+    
     // Interest
     @Transactional
-    @Schedule(hour = "*/6", persistent = false)
+    @Schedule(hour = "*", persistent = false)
     public void interest() {
         List<Account> acc = custService.allAccounts();
         for (Account a : acc) {
@@ -55,6 +66,7 @@ public class bankService {
                     t.setTransmitter(null);
                     entityManager.merge(a);
                     entityManager.merge(t);
+                    
                 }
             }
         }
