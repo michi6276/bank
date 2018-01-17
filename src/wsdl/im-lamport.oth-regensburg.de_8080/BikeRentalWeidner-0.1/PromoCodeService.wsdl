@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.bikeRental.weidner.othr.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PromoCodeServiceService" targetNamespace="http://service.bikeRental.weidner.othr.de/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.bikeRental.weidner.othr.de/" elementFormDefault="unqualified" targetNamespace="http://service.bikeRental.weidner.othr.de/" version="1.0">
+
+  <xs:element name="generatePromoCode" type="tns:generatePromoCode"/>
+
+  <xs:element name="generatePromoCodeResponse" type="tns:generatePromoCodeResponse"/>
+
+  <xs:element name="getPromoCodeByName" type="tns:getPromoCodeByName"/>
+
+  <xs:element name="getPromoCodeByNameResponse" type="tns:getPromoCodeByNameResponse"/>
+
+  <xs:element name="singleIdEntity" type="tns:singleIdEntity"/>
+
+  <xs:complexType name="generatePromoCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element name="arg2" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="generatePromoCodeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:promoCode"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="promoCode">
+    <xs:complexContent>
+      <xs:extension base="tns:singleIdEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="promoCodeName" type="xs:string"/>
+          <xs:element name="value" type="xs:double"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="singleIdEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPromoCodeByName">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getPromoCodeByNameResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:promoCode"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getPromoCodeByName">
+    <wsdl:part element="tns:getPromoCodeByName" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generatePromoCode">
+    <wsdl:part element="tns:generatePromoCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generatePromoCodeResponse">
+    <wsdl:part element="tns:generatePromoCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPromoCodeByNameResponse">
+    <wsdl:part element="tns:getPromoCodeByNameResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PromoCodeService">
+    <wsdl:operation name="generatePromoCode">
+      <wsdl:input message="tns:generatePromoCode" name="generatePromoCode">
+    </wsdl:input>
+      <wsdl:output message="tns:generatePromoCodeResponse" name="generatePromoCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPromoCodeByName">
+      <wsdl:input message="tns:getPromoCodeByName" name="getPromoCodeByName">
+    </wsdl:input>
+      <wsdl:output message="tns:getPromoCodeByNameResponse" name="getPromoCodeByNameResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PromoCodeServiceServiceSoapBinding" type="tns:PromoCodeService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="generatePromoCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="generatePromoCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generatePromoCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPromoCodeByName">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPromoCodeByName">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPromoCodeByNameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PromoCodeServiceService">
+    <wsdl:port binding="tns:PromoCodeServiceServiceSoapBinding" name="PromoCodeServicePort">
+      <soap:address location="http://im-lamport:8080/BikeRentalWeidner-0.1/PromoCodeService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
