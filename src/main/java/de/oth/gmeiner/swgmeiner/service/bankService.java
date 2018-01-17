@@ -17,6 +17,9 @@ import javax.inject.Inject;
 import de.oth.gmeiner.swgmeiner.entity.Account;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -28,7 +31,11 @@ public class bankService {
     @Inject
     customerService custService;
 
+    @PersistenceContext(unitName = "SWGmeiner_pu")
+    private EntityManager entityManager;
+
     // Interest
+    @Transactional
     @Schedule(hour = "*/6", persistent = false)
     public void interest() {
         List<Account> acc = custService.allAccounts();
@@ -46,7 +53,8 @@ public class bankService {
                     t.setPurpose("Interest");
                     t.setReceiver(a);
                     t.setTransmitter(null);
-                    custService.updateAccount(a, t);
+                    entityManager.merge(a);
+                    entityManager.merge(t);
                 }
             }
         }
@@ -54,6 +62,7 @@ public class bankService {
     }
 
     // Charges
+    @Transactional
     @Schedule(hour = "*/24", persistent = false)
     public void charges() {
         List<Account> acc = custService.allAccounts();
@@ -71,7 +80,8 @@ public class bankService {
                     t.setPurpose("Charges");
                     t.setTransmitter(a);
                     t.setReceiver(null);
-                    custService.updateAccount(a, t);
+                    entityManager.merge(a);
+                    entityManager.merge(t);
                 }
             }
         }

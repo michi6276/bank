@@ -69,7 +69,7 @@ public class customerModel implements Serializable {
     }
 
     public String loginCustomer() {
-
+           
         if (this.email.equals("admin") && this.email.equals("admin")) {
             return "admin";
         }

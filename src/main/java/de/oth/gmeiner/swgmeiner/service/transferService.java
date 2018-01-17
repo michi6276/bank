@@ -44,21 +44,12 @@ public class transferService {
         Customer c;
         Query q = entityManager.createQuery("SELECT c.id FROM Customer as c WHERE c.id=(Select a.customer FROM Account as a WHERE a.iban=:iban)");
         q.setParameter("iban", iban);
-        //List<Integer> result=q.getResultList();
         List<Long> customer = q.getResultList();
         if (customer.isEmpty()) {
             return null;
         }
         c = entityManager.find(Customer.class, customer.get(0));
         return c;
-    }
-
-    @Transactional
-    public boolean deleteAccount(Account acc) {
-        Account account = entityManager.find(Account.class, acc.getId());
-        entityManager.merge(account);
-        entityManager.remove(account);
-        return false;
     }
 
     @Transactional
@@ -99,7 +90,6 @@ public class transferService {
         } else {
             return null;
         }
-
     }
 
     @Transactional

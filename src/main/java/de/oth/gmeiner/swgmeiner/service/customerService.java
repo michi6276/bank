@@ -180,12 +180,6 @@ public class customerService {
         return accounts;
     }
 
-    @Transactional
-    public void updateAccount(Account a, Transfer t) {
-        entityManager.merge(a);
-        entityManager.merge(t);
-    }
-
     public static String hashPassword(String password_plaintext) {
         String salt = BCrypt.gensalt(12);
         String hashed_password = BCrypt.hashpw(password_plaintext, salt);

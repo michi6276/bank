@@ -29,7 +29,7 @@ public class Account extends SuperEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Customer customer;
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long AccountNr;
+    long accountNr;
     Date date;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,11 +63,11 @@ public class Account extends SuperEntity implements Serializable {
     }
 
     public long getAccountNr() {
-        return AccountNr;
+        return accountNr;
     }
 
     public void setAccountNr(long AccountNr) {
-        this.AccountNr = AccountNr;
+        this.accountNr = AccountNr;
     }
 
     public long getAccountCode() {
@@ -101,7 +101,7 @@ public class Account extends SuperEntity implements Serializable {
 
     public Account(String iban, long AccountNr, long accountCode) {
         this.iban = iban;
-        this.AccountNr = AccountNr;
+        this.accountNr = AccountNr;
         this.accountBalance = 0;
         this.accountCode = accountCode;
 

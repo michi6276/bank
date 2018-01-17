@@ -32,7 +32,6 @@ public class transferModel implements Serializable {
     Account receiver;
     Account transmitter;
     Transfer transfer;
-    TransferDto dto;
     Customer receiver_c;
     Customer transmitter_c;
     double amount;
@@ -162,14 +161,6 @@ public class transferModel implements Serializable {
 
     public void setTransfer(Transfer transfer) {
         this.transfer = transfer;
-    }
-
-    public TransferDto getDto() {
-        return dto;
-    }
-
-    public void setDto(TransferDto dto) {
-        this.dto = dto;
     }
 
     public String getPurpose() {

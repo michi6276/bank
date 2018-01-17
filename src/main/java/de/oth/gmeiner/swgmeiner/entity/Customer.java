@@ -28,6 +28,11 @@ public class Customer extends SuperEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    String prename;
+    String surname;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Address address;
+    String email;
     String password;
 
     public static long getSerialVersionUID() {
@@ -73,12 +78,6 @@ public class Customer extends SuperEntity implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    String prename;
-    String surname;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    Address address;
-    String email;
 
     public Customer() {
     }
