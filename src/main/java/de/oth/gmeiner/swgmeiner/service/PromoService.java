@@ -6,6 +6,7 @@
 package de.oth.gmeiner.swgmeiner.service;
 
 import de.oth.gmeiner.swgmeiner.entity.Account;
+import de.oth.gmeiner.swgmeiner.entity.AccountType;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Transfer;
 import helper.PromoCode;
@@ -34,22 +35,19 @@ public class PromoService {
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/im-lamport.oth-regensburg.de_8080/BikeRentalWeidner-0.1/PromoCodeService.wsdl")
     private PromoCodeServiceService service;
 
-    public String getPromoCode() {
+    public String getPromoCode(AccountType a) {
 
         
-        try { // Call Web Service Operation
+        try {
           PromoCodeService port = service.getPromoCodeServicePort();
-            // TODO initialize WS operation arguments here
             
-            // TODO process result here
-            PromoCode result = port.generatePromoCode("Michael_Gmeiner","Bank123", 10);
-            System.out.println("Result = "+result);
+            PromoCode result = port.generatePromoCode("Michael_Gmeiner","Bank123", a.getPromoValue());
             return result.getPromoCodeName();
             
         } catch (Exception ex) {
-            // TODO handle custom exceptions here
+            throw new RuntimeException("Error, Could not generate promoCode" + ex.getMessage(),ex);
         }
-        return null;
+       
     }
 
 }

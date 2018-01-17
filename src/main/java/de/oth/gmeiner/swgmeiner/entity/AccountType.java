@@ -25,6 +25,7 @@ public class AccountType extends SuperEntity implements Serializable {
     private String name;
     private double interest;
     private double charges;
+    private int promoValue;
 
     public String getName() {
         return name;
@@ -57,5 +58,14 @@ public class AccountType extends SuperEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public int getPromoValue() {
+        return promoValue;
+    }
+
+    public void setPromoValue(int promoValue) {
+        this.promoValue = promoValue;
+    }
+    
 
 }

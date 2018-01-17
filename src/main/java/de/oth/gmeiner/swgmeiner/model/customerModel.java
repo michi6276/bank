@@ -225,7 +225,7 @@ public class customerModel implements Serializable {
     }
 
     public String getPromoCode() {
-        return promoService.getPromoCode();
+        return promoService.getPromoCode(this.selectedType);
 
     }
 
@@ -362,7 +362,7 @@ public class customerModel implements Serializable {
     public void setCustomerService(customerService customerService) {
         this.customerService = customerService;
     }
-
+    
     public AccountType getSelectedType() {
         return selectedType;
     }
