@@ -37,14 +37,6 @@ public class bankService {
     @PersistenceContext(unitName = "SWGmeiner_pu")
     private EntityManager entityManager;
 
-      @Inject
-    @OptionAccount
-    private Logger loggerAccount;
-
-    @Inject
-    @OptionTransfer
-    private Logger loggerTransfer;
-    
     // Interest
     @Transactional
     @Schedule(hour = "*", persistent = false)
@@ -66,7 +58,7 @@ public class bankService {
                     t.setTransmitter(null);
                     entityManager.merge(a);
                     entityManager.merge(t);
-                    
+
                 }
             }
         }

@@ -181,7 +181,7 @@ public class customerModel implements Serializable {
         Account a = new Account();
         int i = new Random().nextInt(9999999);
         String x = "DE" + new Random().nextInt(9999999) + new Random().nextInt(9999999);
-        a.setAccountBalance(1000);
+        a.setAccountBalance(5000);
         a.setAccountCode(753000);
         a.setAccountNr(i);
         a.setIban(x);
