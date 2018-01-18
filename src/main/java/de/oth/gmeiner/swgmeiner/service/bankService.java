@@ -39,7 +39,7 @@ public class bankService {
 
     // Interest
     @Transactional
-    @Schedule(hour = "*", persistent = false)
+    @Schedule(hour = "*/6", persistent = false)
     public void interest() {
         List<Account> acc = custService.allAccounts();
         for (Account a : acc) {
@@ -67,7 +67,7 @@ public class bankService {
 
     // Charges
     @Transactional
-    @Schedule(hour = "*/24", persistent = false)
+    @Schedule(hour = "*/6", persistent = false)
     public void charges() {
         List<Account> acc = custService.allAccounts();
         for (Account a : acc) {

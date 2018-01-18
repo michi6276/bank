@@ -69,10 +69,7 @@ public class customerModel implements Serializable {
     }
 
     public String loginCustomer() {
-           
-        if (this.email.equals("admin") && this.email.equals("admin")) {
-            return "admin";
-        }
+
         this.customer = customerService.login(this.email, this.password);
         if (this.customer != null) {
             HttpSession session = Util.getSession();
@@ -362,7 +359,7 @@ public class customerModel implements Serializable {
     public void setCustomerService(customerService customerService) {
         this.customerService = customerService;
     }
-    
+
     public AccountType getSelectedType() {
         return selectedType;
     }
