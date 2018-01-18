@@ -140,15 +140,12 @@ public class customerModel implements Serializable {
                     a.setCountry(this.country);
                     a.setPostCode(this.postalCode);
                     a.setStreet(this.street);
-
                     Customer c = new Customer();
                     c.setPrename(this.prename);
                     c.setSurname(this.surname);
                     c.setEmail(this.email);
-
                     c.setPassword(customerService.hashPassword(this.password));
                     c.setAddress(a);
-
                     this.customer = customerService.signup(c);
                     if (this.customer != null) {
                         return "home";
@@ -184,19 +181,16 @@ public class customerModel implements Serializable {
         a.setIban(x);
         a.setDate(new Date());
         a.setAccountType(this.selectedType);
-
         this.current_account = a;
         return "newAccount";
     }
 
     public String createNewAccount() {
-
         this.account.add(0, customerService.createAccount(current_account, this.customer, this.getSelectedType()));
         return "promoCode";
     }
 
     public String checkBankBalance() {
-
         String output = "";
         for (Account acc : account) {
             output = output + acc.getIban() + "   :   " + acc.getAccountBalance() + "\n\n";
@@ -216,14 +210,12 @@ public class customerModel implements Serializable {
     }
 
     public String deleteAccount() {
-
         customerService.deleteAccount(this.current_account, transferService.getTransferbyAccount(current_account));
         return "home";
     }
 
     public String getPromoCode() {
         return promoService.getPromoCode(this.selectedType);
-
     }
 
     public double getAmount() {
