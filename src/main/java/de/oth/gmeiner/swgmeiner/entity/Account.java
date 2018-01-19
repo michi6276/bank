@@ -6,8 +6,6 @@
 package de.oth.gmeiner.swgmeiner.entity;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
-import javax.persistence.OneToOne;
 
 /**
  *

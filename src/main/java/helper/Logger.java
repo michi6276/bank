@@ -4,6 +4,7 @@ import de.oth.gmeiner.swgmeiner.service.customerService;
 import de.oth.gmeiner.swgmeiner.service.transferService;
 import helper.qualifier.OptionAccount;
 import helper.qualifier.OptionCustomer;
+import helper.qualifier.OptionPromo;
 import helper.qualifier.OptionTransfer;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -35,6 +36,13 @@ public class Logger {
     @OptionTransfer
     public org.apache.logging.log4j.Logger transferLogger() {
         return LogManager.getLogger(transferService.class);
+    }
+    
+      @Produces
+    @ApplicationScoped
+    @OptionPromo
+    public org.apache.logging.log4j.Logger promoLogger() {
+        return LogManager.getLogger(customerService.class);
     }
 
 }
