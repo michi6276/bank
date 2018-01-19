@@ -12,11 +12,9 @@ import helper.qualifier.OptionTransfer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,7 +28,7 @@ import org.apache.logging.log4j.Logger;
  */
 @RequestScoped
 @WebService(serviceName = "transferService")
-public class transferService {
+public class transferService implements transferServiceIF {
 
     @Inject
     @OptionTransfer
@@ -53,6 +51,7 @@ public class transferService {
     }
 
     @Transactional
+    @WebMethod(exclude = true)
     public Account getAccountbyIban(String iban) {
         ArrayList<Account> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT a.id FROM Account as a WHERE a.iban =:iban");
@@ -93,6 +92,7 @@ public class transferService {
     }
 
     @Transactional
+    @WebMethod(exclude = true)
     public ArrayList getTransferbyAccount(Account account) {
         ArrayList<Transfer> array = new ArrayList();
         Query q = entityManager.createQuery("SELECT t.id FROM Transfer as t WHERE t.receiver =:acc or t.transmitter =:acc order by date desc");
@@ -104,6 +104,7 @@ public class transferService {
         return array;
     }
 
+    @WebMethod(exclude = true)
     public boolean isTransmitter(Transfer t, Account a) {
         Query q = entityManager.createQuery("SELECT t.id FROM Transfer as t WHERE t.transmitter =:acc and t.id =:id");
         q.setParameter("acc", a);

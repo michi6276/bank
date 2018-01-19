@@ -6,7 +6,7 @@ import de.oth.gmeiner.swgmeiner.entity.AccountType;
 import de.oth.gmeiner.swgmeiner.entity.Customer;
 import de.oth.gmeiner.swgmeiner.entity.Address;
 import de.oth.gmeiner.swgmeiner.entity.Util;
-import de.oth.gmeiner.swgmeiner.service.PromoService;
+import de.oth.gmeiner.swgmeiner.service.promoService;
 import de.oth.gmeiner.swgmeiner.service.customerService;
 import de.oth.gmeiner.swgmeiner.service.transferService;
 import java.io.Serializable;
@@ -52,7 +52,7 @@ public class customerModel implements Serializable {
     @Inject
     private AccountTypeConverter accountTypeConverter;
     @Inject
-    private PromoService promoService;
+    private promoService promoService;
 
     private Matcher matcher;
     private Pattern pattern;
